@@ -1,0 +1,19 @@
+{
+  "name": "node-pangea",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@github.com:pangeacyber/node-pangea.git",
+  "author": "Glenn Gallien <glenn.gallien@pangea.cloud>",
+  "license": "MIT",
+  "dependencies": {
+    "got": "11.8.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.16.0",
+    "@typescript-eslint/parser": "^5.16.0",
+    "eslint": "^8.11.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.6.0"
+  }
+}
