@@ -6,8 +6,17 @@ class AuditService extends BaseService {
     super({ serviceName: 'audit', token: token, version: 'v1'});
   }
 
-  log(data) {
-    return this.request.post('log', query);
+  log(input) {
+    const params = ["action", "actor", "target", "status", "old", "new", "message"];    
+    let data = {};
+
+    for (let key in params) {
+      if (key in input) {
+        data[key] = params[key];
+      }
+    }
+    
+    return this.request.post('log', data);
   }
 
   search(data) {
