@@ -1,9 +1,8 @@
-const PangeaRequest = require('../request');
 const BaseService = require('./base');
 
 class TestService extends BaseService {
-  constructor(token, options) {
-    super({ serviceName: 'tester', token: token, version: ''});
+  constructor(token, config) {
+    super('tester', token, config);
   }
 
   async_call(data) {

@@ -1,13 +1,12 @@
-const PangeaRequest = require('../request');
 const BaseService = require('./base');
 
 class AuditService extends BaseService {
-  constructor(token, options) {
-    super({ serviceName: 'audit', token: token, version: 'v1'});
+  constructor(token, config) {
+    super('audit', token, config);
   }
 
   log(input) {
-    const params = ["action", "actor", "target", "status", "old", "new", "message"];    
+    const params = ["action", "actor", "target", "status", "old", "new", "message"];
     let data = {};
 
     for (let key in params) {
@@ -15,8 +14,8 @@ class AuditService extends BaseService {
         data[key] = params[key];
       }
     }
-    
-    return this.request.post('log', data);
+
+    return this.post('log', data);
   }
 
   search(data) {
@@ -24,7 +23,7 @@ class AuditService extends BaseService {
       query: data
     };
 
-    return this.request.post('search', query);
+    return this.post('search', query);
   }
 }
 

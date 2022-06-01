@@ -3,18 +3,13 @@ const pkg = require('../package.json');
 const PangeaResponse = require('./response');
 
 class PangeaRequest {
-  constructor(serviceName, token, options) {
+  constructor(serviceName, token, config) {
     if (!serviceName) throw new Error("A serviceName is required");
     if (!token) throw new Error("A token is required");
 
-    // TODO: move to config file
-    this.baseDomain = 'dev.pangea.cloud';
-    this.retries = 3;
-    this.async_retries = 4;
-
     this.serviceName = serviceName;
     this.token = token;
-    this.version = options.version || '';
+    this.config = config;
   }
 
   async post(endpoint, data) {
@@ -22,23 +17,23 @@ class PangeaRequest {
       url: this._getUrl(endpoint),
       headers: this._getHeaders(),
       json: data,
-      retry: this.retries,
+      retry: this.config.requestRetries,
       responseType: 'json'
     };
-  
+
     try {
       const apiCall = await got.post(options);
 
-      if (apiCall.statusCode == '202') {
+      if (apiCall.statusCode == '202' && this.config.asyncEnabled) {
         const requestId = apiCall.body?.request_id;
         const response = await this._handle_async(requestId);
         return response;
       } else {
-        return new PangeaResponse(apiCall);
+        return apiCall;
       }
     }
-    catch(error) {
-      console.log('ERROR', error);
+    catch (error) {
+      return error.response;
     }
   }
 
@@ -48,16 +43,15 @@ class PangeaRequest {
     const options = {
       url: this._getUrl(fullPath),
       headers: this._getHeaders(),
-      retry: this.retries,
+      retry: this.config.requestRetries,
       responseType: 'json'
     };
 
     try {
-      const apiCall = await got.get(options);
-      return new PangeaResponse(apiCall);
+      return await got.get(options);
     }
-    catch(error) {
-      console.log('ERROR', error);
+    catch (error) {
+      return error.response;
     }
   }
 
@@ -65,23 +59,23 @@ class PangeaRequest {
     let retryCount = 0;
 
     while (true) {
-      if (retryCount < this.async_retries) {
+      if (retryCount < this.config.asyncRetries) {
         retryCount++;
-        const delay =  (retryCount * retryCount) * 500;
+        const delay = (retryCount * retryCount) * 500;
 
         await this._sleep(delay);
         const response = await this.get('request', requestId);
 
-        if (!(response.code == '202' && retryCount < this.async_retries)) {
+        if (!(response.code == '202' && retryCount < this.config.asyncRetries)) {
           return response;
         }
       }
-    }    
+    }
   }
 
   _getUrl(path) {
-    const version_path = this.version ? `/${this.version}` : '';
-    const url = `https://${this.serviceName}.${this.baseDomain}${version_path}/${path}`;
+    const version_path = this.config.apiVersion ? `/${this.config.apiVersion}` : '';
+    const url = `https://${this.serviceName}.${this.config.baseDomain}${version_path}/${path}`;
 
     return url;
   }

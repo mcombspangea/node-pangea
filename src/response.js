@@ -1,8 +1,19 @@
+const { HTTPError } = require("got/dist/source");
+
 class PangeaResponse {
-  constructor(gotResponse) {
-    this._data = gotResponse.body || {};
-    this._status = gotResponse.statusMessage || '';
-    this._code = gotResponse.statusCode || '';
+  constructor(response) {
+    if (response instanceof HTTPError) {
+      this.gotResponse = response.response;
+      this.success = false;
+    }
+    else {
+      this.gotResponse = response;
+      this.success = true;
+    }
+
+    this._data = this.gotResponse.body || {};
+    this._status = this.gotResponse.statusMessage || '';
+    this._code = this.gotResponse.statusCode || '';
   }
 
   get result() {
