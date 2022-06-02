@@ -1,0 +1,24 @@
+image: node
+
+stages:
+  - test
+  - lint
+  - publish
+
+test:
+  stage: test
+  script:
+    - echo "Testing..."
+
+lint:
+  stage: lint
+  script:
+    - echo "Linting..."
+
+publish:
+  stage: publish
+  only:
+    - main
+  script:
+    - yarn install
+    - cat ${NPMRC} > .npmrc && npm publish && rm -rf .npmrc
