@@ -10,6 +10,7 @@ class PangeaRequest {
     this.serviceName = serviceName;
     this.token = token;
     this.config = config;
+    this.extra_headers = {};
   }
 
   async post(endpoint, data) {
@@ -53,7 +54,7 @@ class PangeaRequest {
     catch (error) {
       return error.response;
     }
-  }
+  }  
 
   async _handle_async(requestId) {
     let retryCount = 0;
@@ -73,6 +74,10 @@ class PangeaRequest {
     }
   }
 
+  setExtraHeaders(headers) {
+    this.extra_headers = { ...headers };
+  }
+
   _getUrl(path) {
     const version_path = this.config.apiVersion ? `/${this.config.apiVersion}` : '';
     const url = `https://${this.serviceName}.${this.config.baseDomain}${version_path}/${path}`;
@@ -82,9 +87,14 @@ class PangeaRequest {
 
   _getHeaders() {
     const headers = {
-      'User-Agent': `Pangea Node ${pkg.version}`,
-      'Authorization': `Bearer ${this.token}`
+      "Content-Type": "application/json",
+      "User-Agent": `Pangea Node ${pkg.version}`,
+      "Authorization": `Bearer ${this.token}`
     };
+
+    if (Object.keys(this.extra_headers).length > 0) {
+      Object.assign(headers, this.extra_headers);
+    }
 
     return headers;
   }
@@ -94,6 +104,7 @@ class PangeaRequest {
       setTimeout(resolve, delay)
     })
   }
+  
 }
 
 module.exports = PangeaRequest;

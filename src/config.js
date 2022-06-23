@@ -1,7 +1,9 @@
 class PangeaConfig {
   constructor(options) {
     const defaultOptions = {
-      baseDomain: 'pangea.cloud',
+      baseDomain: "pangea.cloud",
+      environment: "production",
+      configId: "",
       requestRetries: 3,
       requestTimeout: 5000,
       asyncEnabled: true,
