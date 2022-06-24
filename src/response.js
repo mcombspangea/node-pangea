@@ -19,14 +19,6 @@ class PangeaResponse {
     return this.data?.result;
   }
 
-  get status() {
-    return this.status;
-  }
-
-  get code() {
-    return this.code;
-  }
-
   get requestId() {
     return this.data?.request_id;
   }

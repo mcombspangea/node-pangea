@@ -38,7 +38,7 @@ class AuditService extends BaseService {
     return this.post("log", data);
   }
 
-  search(query, options) {
+  search(query, options = {}) {
     const validOptions = ["page_size", "start", "end", "sources"];
     const payload = { query };
 

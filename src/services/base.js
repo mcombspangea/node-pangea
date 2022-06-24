@@ -32,7 +32,7 @@ class BaseService {
 
   async post(endpoint, data) {
     const gotResponse = await this.request.post(endpoint, data);
-    console.log("RESPONSE", gotResponse);
+
     return new this.ResponseClass(gotResponse);
   }
 }

@@ -63,7 +63,7 @@ class PangeaRequest {
       await this.sleep(delay);
       // eslint-disable-next-line no-await-in-loop
       const response = await this.get("request", requestId);
-      console.log("Async Status", response.code);
+
       if (!(response.code === "202" && retryCount < this.config.asyncRetries)) {
         return response;
       }
