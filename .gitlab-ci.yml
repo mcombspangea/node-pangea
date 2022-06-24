@@ -26,7 +26,7 @@ testing:
     - echo "Unit tests..."
 
 integration:
-  stage: initegration_tests
+  stage: integration_tests
   script:
     - echo "Integration tests..."
 
