@@ -8,22 +8,22 @@ class PangeaConfig {
       requestTimeout: 5000,
       asyncEnabled: true,
       asyncRetries: 4,
-      apiVersion: 'v1'
+      apiVersion: "v1",
     };
 
     this.options = {
       ...defaultOptions,
-      ...options
-    }
+      ...options,
+    };
 
     // create getters for defaultOptions keys
-    Object.keys(defaultOptions).forEach(prop => {
+    Object.keys(defaultOptions).forEach((prop) => {
       Object.defineProperty(this, prop, {
-        get: function () {
+        get: () => {
           return this.options[prop];
         },
-      })
-    })
+      });
+    });
   }
 }
 

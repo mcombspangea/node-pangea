@@ -1,24 +1,39 @@
 image: node
 
+cache:
+  paths:
+    - node_modules/
+    - .yarn
+
 stages:
-  - test
   - lint
+  - unit_tests
+  - integration_tests
   - publish
 
-test:
-  stage: test
-  script:
-    - echo "Testing..."
+before_script:
+  - yarn config set cache-folder .yarn
+  - yarn install
 
 lint:
   stage: lint
   script:
-    - echo "Linting..."
+    - yarn lint
+
+testing:
+  stage: unit_tests
+  script:
+    - echo "Unit tests..."
+
+integration:
+  stage: initegration_tests
+  script:
+    - echo "Integration tests..."
 
 publish:
   stage: publish
   only:
-    - main
+    - tags
   script:
     - yarn install
     - cat ${NPMRC} > .npmrc && npm publish && rm -rf .npmrc

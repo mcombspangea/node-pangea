@@ -1,18 +1,15 @@
-const BaseService = require('./base');
+const BaseService = require("./base");
 
 class RedactService extends BaseService {
   constructor(token, config) {
-    super('redact', token, config);
+    super("redact", token, config);
   }
 
   redact(param) {
-    const data = {
-      param: param
-    };
+    const data = { param };
 
-    return this.post('redact', data);
+    return this.post("redact", data);
   }
-
 }
 
 module.exports = RedactService;

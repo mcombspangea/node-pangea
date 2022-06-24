@@ -1,36 +1,42 @@
 const PangeaConfig = require("../src/config");
-const AuditService = require('../src/services/audit');
+const AuditService = require("../src/services/audit");
 
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.AUDIT_CONFIG_ID;
-const config = new PangeaConfig({ baseDomain: 'dev.pangea.cloud', configId: configId });
+const config = new PangeaConfig({ baseDomain: "dev.pangea.cloud", configId });
 const audit = new AuditService(token, config);
 
 (async () => {
   const data = {
-    "actor": "pangea",
-    "action": "update",
-    "status": "success",
-    "message": "node-sdk test message"
+    actor: "pangea",
+    action: "update",
+    status: "success",
+    message: "node-sdk test message",
   };
 
-  console.log('Logging audit data...')
-  const log_response = await audit.log(data);
+  // eslint-disable-next-line no-console
+  console.log("Logging audit data...");
+  const logResponse = await audit.log(data);
 
-  if (log_response.success) {
-    console.log('Success:', log_response.result);
+  if (logResponse.success) {
+    // eslint-disable-next-line no-console
+    console.log("Success:", logResponse.result);
   } else {
-    console.log("Error", log_response.code, log_response.result);
+    // eslint-disable-next-line no-console
+    console.log("Error", logResponse.code, logResponse.result);
   }
 
-  console.log('Searching audit data...')
-  const search_response = await audit.search("success");
+  // eslint-disable-next-line no-console
+  console.log("Searching audit data...");
+  const searchResponse = await audit.search("success");
 
-  if (search_response.success) {
-    console.log('Status', search_response.code);
-    console.log('Events', search_response.result.events);
+  if (searchResponse.success) {
+    // eslint-disable-next-line no-console
+    console.log("Status", searchResponse.code);
+    // eslint-disable-next-line no-console
+    console.log("Events", searchResponse.result.events);
   } else {
-    console.log("Error", log_response.code, log_response.result);
+    // eslint-disable-next-line no-console
+    console.log("Error", searchResponse.code, searchResponse.result);
   }
-  
 })();

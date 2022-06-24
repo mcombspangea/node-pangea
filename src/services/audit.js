@@ -1,28 +1,18 @@
-const BaseService = require('./base');
+const BaseService = require("./base");
 
 const ConfigIdHeaderName = "X-Pangea-Audit-Config-ID";
 
-const SupportedFields = [
-  "actor",
-  "action",
-  "status",
-  "source",
-  "target",
-]
+const SupportedFields = ["actor", "action", "status", "source", "target"];
 
-const SupportedJSONFields = [
-  "message",
-  "new",
-  "old",
-]
+const SupportedJSONFields = ["message", "new", "old"];
 
 class AuditService extends BaseService {
   constructor(token, config) {
-    super('audit', token, config);
+    super("audit", token, config);
 
-    if (!!config.configId) {
+    if (config.configId) {
       const configIdHeader = {
-        [ConfigIdHeaderName]: config.configId
+        [ConfigIdHeaderName]: config.configId,
       };
       this.request.setExtraHeaders(configIdHeader);
     }
@@ -31,38 +21,34 @@ class AuditService extends BaseService {
   log(content) {
     const event = {};
 
-    SupportedFields.forEach(key => {
-      if (key in input) {
+    SupportedFields.forEach((key) => {
+      if (key in content) {
         event[key] = content[key];
       }
     });
 
-    SupportedJSONFields.forEach(key => {
-      if (key in input) {
+    SupportedJSONFields.forEach((key) => {
+      if (key in content) {
         event[key] = JSON.stringify(content[key]);
       }
     });
 
-    const data = {
-      event: event
-    };
+    const data = { event };
 
-    return this.post('log', data);
+    return this.post("log", data);
   }
 
   search(query, options) {
-    const valid_options = ["page_size", "start", "end", "sources"]
-    const payload = {
-      query: query
-    };
+    const validOptions = ["page_size", "start", "end", "sources"];
+    const payload = { query };
 
-    valid_options.forEach(name => {
+    validOptions.forEach((name) => {
       if (name in options) {
         payload[name] = options[name];
       }
     });
 
-    return this.post('search', payload);
+    return this.post("search", payload);
   }
 }
 

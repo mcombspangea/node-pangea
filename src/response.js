@@ -5,31 +5,30 @@ class PangeaResponse {
     if (response instanceof HTTPError) {
       this.gotResponse = response.response;
       this.success = false;
-    }
-    else {
+    } else {
       this.gotResponse = response;
       this.success = true;
     }
 
-    this._data = this.gotResponse.body || {};
-    this._status = this.gotResponse.statusMessage || '';
-    this._code = this.gotResponse.statusCode || '';
+    this.data = this.gotResponse.body || {};
+    this.status = this.gotResponse.statusMessage || "";
+    this.code = this.gotResponse.statusCode || "";
   }
 
   get result() {
-    return this._data?.result;
+    return this.data?.result;
   }
 
   get status() {
-    return this._status;
+    return this.status;
   }
 
   get code() {
-    return this._code;
+    return this.code;
   }
 
-  get request_id() {
-    return this._data?.request_id;
+  get requestId() {
+    return this.data?.request_id;
   }
 }
 

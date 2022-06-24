@@ -1,4 +1,4 @@
-const PangeaConfig = require('./config');
+const PangeaConfig = require("./config");
 const AuditService = require("./services/audit");
 const RedactService = require("./services/redact");
 const EmbargoService = require("./services/embargo");
