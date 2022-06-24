@@ -1,42 +1,39 @@
-# Website deploy pipeline
 image: node
 
 cache:
   paths:
     - node_modules/
-
-before_script:
-  - apt-get update -qq
-  - "which ssh-agent || ( apt-get install -qq openssh-client )"
-  - apt-get install -qq rsync
-  - eval $(ssh-agent -s)
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - .yarn
 
 stages:
-  - deploy
+  - lint
+  - unit_tests
+  - integration_tests
+  - publish
 
-deploy_staging:
-  stage: deploy
-  environment:
-    name: staging
-    url: site-test.pangea.cloud
-  variables:
-    DEPLOY_PATH: 'testsite'
-  script:
-    - bash deploy.sh
-  only:
-    - dev
+before_script:
+  - yarn config set cache-folder .yarn
+  - yarn install
 
-deploy_production:
-  stage: deploy
-  environment:
-    name: production
-    url: pangea.cloud
-  variables:
-    DEPLOY_PATH: 'website'
+lint:
+  stage: lint
   script:
-    - bash deploy.sh
+    - yarn lint
+
+testing:
+  stage: unit_tests
+  script:
+    - echo "Unit tests..."
+
+integration:
+  stage: initegration_tests
+  script:
+    - echo "Integration tests..."
+
+publish:
+  stage: publish
   only:
-    - main
+    - tags
+  script:
+    - yarn install
+    - cat ${NPMRC} > .npmrc && npm publish && rm -rf .npmrc
