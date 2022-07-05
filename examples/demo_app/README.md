@@ -48,6 +48,10 @@ Authorization: Basic <username> <password>
 Body: {}
 ```
 
+### API Documentation
+Please view `openapi.json`
+
+
 ### Submitting a Resume
 
 To upload a resume:
