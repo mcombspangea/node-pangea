@@ -28,7 +28,7 @@ router.post("/setup", (req, res) => {
 
     if (result) {
       code = 200;
-      message = "App setup completed";
+      message = "App setup completed.";
     } else {
       code = 400;
       message = "Setup previously completed";
