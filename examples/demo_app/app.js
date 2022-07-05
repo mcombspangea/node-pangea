@@ -185,30 +185,7 @@ class App {
     const oldEmp = await this.store.lookupEmployee(data.email);
 
     if (oldEmp) {
-      const newEmp = { ...oldEmp }; // keeping old_emp around for audit logging
-
-      // make the updates
-      if (data.start_date) {
-        newEmp.start_date = data.start_date;
-      }
-      if (data.term_date) {
-        newEmp.term_date = data.term_date;
-      }
-      if (data.manager_id) {
-        newEmp.manager_id = data.manager_id;
-      }
-      if (data.department) {
-        newEmp.department = data.department;
-      }
-      if (data.salary) {
-        newEmp.salary = data.salary;
-      }
-      if (data.status) {
-        newEmp.status = data.status;
-      }
-      if (data.company_email) {
-        newEmp.company_email = data.company_email;
-      }
+      const newEmp = { ...oldEmp, ...data }; // keeping old_emp around for audit logging
 
       newEmp.employee_id = oldEmp.id;
 
