@@ -1,9 +1,14 @@
 {
+  "swagger": "2.0",
+  "info": {
+    "description": "Demo App",
+    "title": "Demo App",
+    "version": "1.0.0"
+  },
   "paths": {
     "/setup": {
       "post": {
         "summary": "Setup the App database",
-        "requestBody": {},
         "responses": {
           "200": {
             "description": "App set completed"
@@ -11,66 +16,29 @@
           "400": {
             "description": "Setup has already been run"
           }
-        },
-        "securitySchemes": {
-          "scheme": "basic",
-          "username": "string",
-          "password": "string"
         }
       }
     },
     "/upload_resume": {
       "post": {
         "summary": "Upload a new candidate's resume",
-        "headers": {
-          "ClientIPAddress": "Mock IP address of the submission client"
-        },
-        "requestBody": {
-          "content": {
-            "type": "application/json",
-            "parameters": [
-              {
-                "name": "first_name",
-                "in": "body",
-                "description": "Candidate's first name",
-                "required": true,
-                "type": "string"
-              },
-              {
-                "name": "last_name",
-                "in": "body",
-                "description": "Candidate's last name",
-                "required": true,
-                "type": "string"
-              },
-              {
-                "name": "email",
-                "in": "body",
-                "description": "Candidate's personal email address",
-                "required": true,
-                "type": "string"
-              },
-              {
-                "name": "phone",
-                "in": "body",
-                "description": "Candidate's phone number",
-                "type": "string"
-              },
-              {
-                "name": "dob",
-                "in": "body",
-                "description": "Candidate's birthday in format MM-DD-YYYY",
-                "type": "string"
-              },
-              {
-                "name": "phone",
-                "in": "body",
-                "description": "Candidate's social security number in format ###-##-####",
-                "type": "string"
-              }
-            ]
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Candidate's information",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Resume"
+            }
           }
-        },
+        ],
         "responses": {
           "201": {
             "description": "Resume accepted"
@@ -81,18 +49,24 @@
           "403": {
             "description": "Sanctioned country application blocked"
           }
-        },
-        "securitySchemes": {
-          "scheme": "basic",
-          "username": "string",
-          "password": "string"
         }
       }
     },
-    "/employee": {
+    "/employee/{email}": {
       "get": {
-        "description": "Returns a single employee record",
-        "requestBody": {},
+        "description": "Returns a single employee record by email",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "email of employee to fetch",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Record retrieved"
@@ -100,72 +74,29 @@
           "400": {
             "description": "Bad request"
           }
-        },
-        "securitySchemes": {
-          "scheme": "basic",
-          "username": "string",
-          "password": "string"
         }
       }
     },
     "/update_employee": {
       "post": {
         "description": "Updates an employee record",
-        "requestBody": {
-          "content": {
-            "type": "application/json",
-            "parameters": [
-              {
-                "name": "email",
-                "in": "body",
-                "description": "Candidate's personal email address",
-                "required": true,
-                "type": "string"
-              },
-              {
-                "name": "start_date",
-                "in": "body",
-                "description": "Candidate's start date in format MM-DD-YYYY",
-                "type": "string",
-                "required": false
-              },
-              {
-                "name": "term_date",
-                "in": "body",
-                "description": "Candidate's termination date in format MM-DD-YYYY",
-                "type": "string",
-                "required": false
-              },
-              {
-                "name": "salary",
-                "in": "body",
-                "description": "Candidate's salary",
-                "type": "integer"
-              },
-              {
-                "name": "status",
-                "in": "body",
-                "description": "Candidate's hiring status, 3 - full time, 4 - contractor, 5 - terminated",
-                "type": "integer",
-                "required": true
-              },
-              {
-                "name": "company_email",
-                "in": "body",
-                "description": "Candidate's company email address",
-                "type": "string",
-                "required": true
-              },
-              {
-                "name": "manager_id",
-                "in": "body",
-                "description": "Candidate's manager ID",
-                "type": "integer",
-                "required": false
-              }
-            ]
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Candidate's info to update",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Employee"
+            }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "Record updated"
@@ -176,11 +107,91 @@
           "500": {
             "description": "internal database error"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Resume": {
+      "type": "object",
+      "required": [
+        "first_name",
+        "last_name",
+        "email",
+        "phone",
+        "dob",
+        "ssn"
+      ],
+      "properties": {
+        "first_name": {
+          "type": "string",
+          "example": "John"
         },
-        "securitySchemes": {
-          "scheme": "basic",
-          "username": "string",
-          "password": "string"
+        "last_name": {
+          "type": "string",
+          "example": "Smith"
+        },
+        "email": {
+          "type": "string",
+          "example": "john.smith@gmail.com"
+        },
+        "phone": {
+          "type": "string",
+          "example": "408-555-1212"
+        },
+        "dob": {
+          "type": "string",
+          "example": "06-28-1999"
+        },
+        "ssn": {
+          "type": "string",
+          "example": "123-44-5678"
+        }
+      }
+    },
+    "Employee": {
+      "type": "object",
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "example": "john.smith@gmail.com"
+        },
+        "start_date": {
+          "type": "string",
+          "example": "07-05-2022"
+        },
+        "term_date": {
+          "type": "string",
+          "example": "07-05-2022"
+        },
+        "department": {
+          "type": "string",
+          "example": "sales"
+        },
+        "salary": {
+          "type": "integer",
+          "format": "int32",
+          "example": 100000
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32",
+          "enum": [
+            3,
+            4,
+            5
+          ]
+        },
+        "company_email": {
+          "type": "string",
+          "example": "john.smith@acme.com"
+        },
+        "manager_id": {
+          "type": "integer",
+          "example": 1
         }
       }
     }
