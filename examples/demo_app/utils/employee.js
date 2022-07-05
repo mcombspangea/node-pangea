@@ -1,10 +1,9 @@
-
 const EmployeeStatus = {
   UNKNOWN: 1,
   CANDIDATE: 2,
   FULL_TIME: 3,
   CONTRACTOR: 4,
-  TERMINATED: 5
+  TERMINATED: 5,
 };
 
 function Employee() {
@@ -27,4 +26,4 @@ function Employee() {
   this.status = EmployeeStatus.UNKNOWN;
 }
 
-module.exports = { Employee, EmployeeStatus};
+module.exports = { Employee, EmployeeStatus };

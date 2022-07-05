@@ -1,5 +1,6 @@
 # Pangea Demo App
-This is a Demo App to provide example usage of the Pangea node-sdk.  
+
+This is a Demo App to provide example usage of the Pangea node-sdk.
 
 The Demo App sets up a local sqlite DB and a runs a simple web server on localhost.
 
@@ -8,15 +9,19 @@ The App simulates an HR application that allows a user to upload resumes, retrie
 ## Usage
 
 ### Prerequisite
-- Node 
+
+- Node
 
 #### Dependent modules
-- express 
+
+- express
 - body-parser
 - sqlite3
 
 ### Environment Setup
+
 Set the following environment variables:
+
 - `PANGEA_TOKEN`
 - `EMBARGO_CONFIG_ID`
 - `REDACT_CONFIG_ID`
@@ -24,12 +29,15 @@ Set the following environment variables:
 - `PANGEA_CSP` (ex: "aws" for AWS)
 
 ### Main App Startup
+
 ```
 node server.js
 ```
+
 Will start a web server running on `http://localhost:8080`.
 
 ### Running the App for the First Time
+
 First time running the App requires a database creation call:
 
 ```
@@ -41,8 +49,10 @@ Body: {}
 ```
 
 ### Submitting a Resume
+
 To upload a resume:
-- Make sure to set the HEADER key "ClientIPAddress" to simulate call originating from an external user's IP.  This is to test the Embargo service.  Ex: '175.45.176.1' submission will be rejected due to sanctions. 
+
+- Make sure to set the HEADER key "ClientIPAddress" to simulate call originating from an external user's IP. This is to test the Embargo service. Ex: '175.45.176.1' submission will be rejected due to sanctions.
 
 ```
 POST http://localhost:8080/upload_resume
@@ -52,7 +62,7 @@ Authorization: Basic user@gmail.com password
 Header:
     "ClientIPAddress" : "1.1.1.1"
 
-Body: 
+Body:
 {
         "first_name" : "Alan",
         "last_name" : "Smith",
@@ -64,6 +74,7 @@ Body:
 ```
 
 ### Retrieving Employee record
+
 To view an existing employee record, search by email:
 
 ```
@@ -73,6 +84,7 @@ Authorization: Basic manager@acme.com password
 ```
 
 ### Updating Employee record
+
 To update an existing employee record, i.e. to "hire" the employee:
 
 ```
@@ -91,16 +103,18 @@ Body:
 }
 ```
 
-
 ### Debug Logs
+
 Debug logs for the App are printed to stdout
 
 ### Sqlite DB
-`demo-app.db` is created in the `example/demo_app/` directory.  To test in sqlite3 tool:
+
+`demo-app.db` is created in the `example/demo_app/` directory. To test in sqlite3 tool:
 
 ```
 sqlite3 demo-app.db
 ```
 
 ## References
+
 Viewing Audit Logs: https://console.dev.pangea.cloud/service/audit/logs

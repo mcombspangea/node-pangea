@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 const sqlite3 = require("sqlite3");
 
-
 class DB {
   constructor() {
     this.db = new sqlite3.Database("demo-app.db", (err) => {
@@ -34,6 +33,7 @@ class DB {
 
   get(sql, params = []) {
     return new Promise((resolve, reject) => {
+      // eslint-disable-next-line func-names
       this.db.get(sql, params, function (err, row) {
         if (err) {
           console.log(err);
@@ -92,8 +92,15 @@ class DB {
       date_of_birth, ssn, status) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
     try {
-      await this.run(query, [emp.first_name, emp.last_name, emp.personal_email, 
-        emp.phone, emp.date_of_birth, emp.ssn, emp.status]);
+      await this.run(query, [
+        emp.first_name,
+        emp.last_name,
+        emp.personal_email,
+        emp.phone,
+        emp.date_of_birth,
+        emp.ssn,
+        emp.status,
+      ]);
     } catch (e) {
       console.log("[DB.add_employee] datastore error: ", e);
       return false;
@@ -132,11 +139,19 @@ class DB {
           manager = ?,
           salary = ?,
           status = ?
-      WHERE id = ?`
+      WHERE id = ?`;
 
     try {
-      await this.run(query, [emp.company_email, emp.start_date, emp.term_date,
-        emp.department, emp.manager_id, emp.salary, emp.status, emp.employee_id]);
+      await this.run(query, [
+        emp.company_email,
+        emp.start_date,
+        emp.term_date,
+        emp.department,
+        emp.manager_id,
+        emp.salary,
+        emp.status,
+        emp.employee_id,
+      ]);
     } catch (e) {
       console.log("[DB.updateEmployee] datastore error: ", e);
       return false;
