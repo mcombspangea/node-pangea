@@ -5,6 +5,16 @@
     "title": "Demo App",
     "version": "1.0.0"
   },
+  "securityDefinitions": {
+    "basicAuth": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "basicAuth": []
+    }
+  ],
   "paths": {
     "/setup": {
       "post": {
@@ -33,6 +43,12 @@
             "schema": {
               "$ref": "#/definitions/Resume"
             }
+          },
+          {
+            "name": "ClientIPAddress",
+            "in": "header",
+            "type": "string",
+            "required": true
           }
         ],
         "responses": {
