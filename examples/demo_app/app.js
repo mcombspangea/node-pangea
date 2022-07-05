@@ -9,29 +9,29 @@ const AuditService = require("../../src/services/audit");
 const RedactService = require("../../src/services/redact");
 
 // Setup Pangea dependencies
-const token = process.env.PANGEA_TOKEN;
-const embargoConfigId = process.env.EMBARGO_CONFIG_ID;
-const auditConfigId = process.env.AUDIT_CONFIG_ID;
-const redactConfigId = process.env.REDACT_CONFIG_ID;
-const pangeaCsp = process.env.PANGEA_CSP;
+const TOKEN = process.env.PANGEA_TOKEN;
+const EMBARGOCONFIG_ID = process.env.EMBARGO_CONFIG_ID;
+const AUDITCONFIG_ID = process.env.AUDIT_CONFIG_ID;
+const REDACTCONFIG_ID = process.env.REDACT_CONFIG_ID;
+const PANGEACSP = process.env.PANGEA_CSP;
 
 const embargoConfig = new PangeaConfig({
-  baseDomain: `${pangeaCsp}.pangea.cloud`,
-  configId: embargoConfigId,
+  baseDomain: `${PANGEACSP}.pangea.cloud`,
+  configId: EMBARGOCONFIG_ID,
 });
-const embargo = new EmbargoService(token, embargoConfig);
+const embargo = new EmbargoService(TOKEN, embargoConfig);
 
 const auditConfig = new PangeaConfig({
-  baseDomain: `${pangeaCsp}.pangea.cloud`,
-  configId: auditConfigId,
+  baseDomain: `${PANGEACSP}.pangea.cloud`,
+  configId: AUDITCONFIG_ID,
 });
-const audit = new AuditService(token, auditConfig);
+const audit = new AuditService(TOKEN, auditConfig);
 
 const redactConfig = new PangeaConfig({
-  baseDomain: `${pangeaCsp}.pangea.cloud`,
-  configId: redactConfigId,
+  baseDomain: `${PANGEACSP}.pangea.cloud`,
+  configId: REDACTCONFIG_ID,
 });
-const redact = new RedactService(token, redactConfig);
+const redact = new RedactService(TOKEN, redactConfig);
 
 // Primary logic of Demo App.
 // Interacts with Pangea SDK, stores data to local sqlite file
@@ -174,9 +174,8 @@ class App {
     }
 
     const code = emp ? 200 : 400;
-    const message = emp || "Bad request";
 
-    return [code, message];
+    return { code, emp };
   }
 
   async updateEmployee(user, data) {

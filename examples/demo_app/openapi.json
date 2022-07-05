@@ -1,0 +1,188 @@
+{
+  "paths": {
+    "/setup": {
+      "post": {
+        "summary": "Setup the App database",
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "App set completed"
+          },
+          "400": {
+            "description": "Setup has already been run"
+          }
+        },
+        "securitySchemes": {
+          "scheme": "basic",
+          "username": "string",
+          "password": "string"
+        }
+      }
+    },
+    "/upload_resume": {
+      "post": {
+        "summary": "Upload a new candidate's resume",
+        "headers": {
+          "ClientIPAddress": "Mock IP address of the submission client"
+        },
+        "requestBody": {
+          "content": {
+            "type": "application/json",
+            "parameters": [
+              {
+                "name": "first_name",
+                "in": "body",
+                "description": "Candidate's first name",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "last_name",
+                "in": "body",
+                "description": "Candidate's last name",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "email",
+                "in": "body",
+                "description": "Candidate's personal email address",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "phone",
+                "in": "body",
+                "description": "Candidate's phone number",
+                "type": "string"
+              },
+              {
+                "name": "dob",
+                "in": "body",
+                "description": "Candidate's birthday in format MM-DD-YYYY",
+                "type": "string"
+              },
+              {
+                "name": "phone",
+                "in": "body",
+                "description": "Candidate's social security number in format ###-##-####",
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Resume accepted"
+          },
+          "400": {
+            "description": "Resume denied"
+          },
+          "403": {
+            "description": "Sanctioned country application blocked"
+          }
+        },
+        "securitySchemes": {
+          "scheme": "basic",
+          "username": "string",
+          "password": "string"
+        }
+      }
+    },
+    "/employee": {
+      "get": {
+        "description": "Returns a single employee record",
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Record retrieved"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "securitySchemes": {
+          "scheme": "basic",
+          "username": "string",
+          "password": "string"
+        }
+      }
+    },
+    "/update_employee": {
+      "post": {
+        "description": "Updates an employee record",
+        "requestBody": {
+          "content": {
+            "type": "application/json",
+            "parameters": [
+              {
+                "name": "email",
+                "in": "body",
+                "description": "Candidate's personal email address",
+                "required": true,
+                "type": "string"
+              },
+              {
+                "name": "start_date",
+                "in": "body",
+                "description": "Candidate's start date in format MM-DD-YYYY",
+                "type": "string",
+                "required": false
+              },
+              {
+                "name": "term_date",
+                "in": "body",
+                "description": "Candidate's termination date in format MM-DD-YYYY",
+                "type": "string",
+                "required": false
+              },
+              {
+                "name": "salary",
+                "in": "body",
+                "description": "Candidate's salary",
+                "type": "integer"
+              },
+              {
+                "name": "status",
+                "in": "body",
+                "description": "Candidate's hiring status, 3 - full time, 4 - contractor, 5 - terminated",
+                "type": "integer",
+                "required": true
+              },
+              {
+                "name": "company_email",
+                "in": "body",
+                "description": "Candidate's company email address",
+                "type": "string",
+                "required": true
+              },
+              {
+                "name": "manager_id",
+                "in": "body",
+                "description": "Candidate's manager ID",
+                "type": "integer",
+                "required": false
+              }
+            ]
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Record updated"
+          },
+          "404": {
+            "description": "Employee record not found"
+          },
+          "500": {
+            "description": "internal database error"
+          }
+        },
+        "securitySchemes": {
+          "scheme": "basic",
+          "username": "string",
+          "password": "string"
+        }
+      }
+    }
+  }
+}
