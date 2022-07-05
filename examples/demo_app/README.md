@@ -49,8 +49,8 @@ Body: {}
 ```
 
 ### API Documentation
-Please view `openapi.json`
 
+Please view `openapi.json`
 
 ### Submitting a Resume
 

@@ -22,12 +22,8 @@
     "/upload_resume": {
       "post": {
         "summary": "Upload a new candidate's resume",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -55,9 +51,7 @@
     "/employee/{email}": {
       "get": {
         "description": "Returns a single employee record by email",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "email",
@@ -80,12 +74,8 @@
     "/update_employee": {
       "post": {
         "description": "Updates an employee record",
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ],
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "body",
@@ -114,14 +104,7 @@
   "definitions": {
     "Resume": {
       "type": "object",
-      "required": [
-        "first_name",
-        "last_name",
-        "email",
-        "phone",
-        "dob",
-        "ssn"
-      ],
+      "required": ["first_name", "last_name", "email", "phone", "dob", "ssn"],
       "properties": {
         "first_name": {
           "type": "string",
@@ -151,9 +134,7 @@
     },
     "Employee": {
       "type": "object",
-      "required": [
-        "email"
-      ],
+      "required": ["email"],
       "properties": {
         "email": {
           "type": "string",
@@ -179,11 +160,7 @@
         "status": {
           "type": "integer",
           "format": "int32",
-          "enum": [
-            3,
-            4,
-            5
-          ]
+          "enum": [3, 4, 5]
         },
         "company_email": {
           "type": "string",
