@@ -43,6 +43,13 @@ router.post("/setup", (req, res) => {
 router.post("/upload_resume", (req, res) => {
   const demo = new DemoApp();
 
+  /* NOTE: In reality, we should be obtaining the requestion client's IP address 
+           from req.ip.
+           However, it's likely this Demo App is run from the same "localhost" machine,
+           and the fact that in Demo usage the IP address won't really trigger
+           an Embargo sanctioned check, we are mocking up the request is coming from 
+           the IP address that is set in header['ClientIPAddress'] field.
+  */
   const clientIp = req.headers.clientipaddress;
 
   demo.uploadResume(req.user, clientIp, req.body).then(([code, message]) => {
