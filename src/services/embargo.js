@@ -12,8 +12,8 @@ class EmbargoService extends BaseService {
   /**
    * @summary Embargo
    * @description Check IPs and country codes against known sanction and trade embargo lists.
-   * @param {String} ipAddress - Geolocate this IP and check the corresponding country against 
-   *   the enabled embargo lists. Note: Either the IP or ISO_CODE parameter must be provided, 
+   * @param {String} ipAddress - Geolocate this IP and check the corresponding country against
+   *   the enabled embargo lists. Note: Either the IP or ISO_CODE parameter must be provided,
    *   not both.
    * @returns {Promise} - A promise representing an async call to the check endpoint
    * @example

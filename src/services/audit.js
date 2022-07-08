@@ -31,7 +31,7 @@ class AuditService extends BaseService {
    *   - status (string): Record whether or not the activity was successful.
    *   - source (string): Used to record the location from where an activity occurred.
    *   - target (string): Used to record the specific record that was targeted by the auditable activity.
-   *   - message (string|object): A message describing a detailed account of what happened. 
+   *   - message (string|object): A message describing a detailed account of what happened.
    *     This can be recorded as free-form text or as a JSON-formatted string.
    *   - new (string|object): The value of a record after it was changed.
    *   - old (string|object): The value of a record before it was changed.
@@ -71,7 +71,7 @@ class AuditService extends BaseService {
   /**
    * @summary Search for events
    * @description Search for events that match the provided search criteria.
-   * @param {String} query - Natural search string; list of keywords with optional 
+   * @param {String} query - Natural search string; list of keywords with optional
    *   `<option>:<value>` qualifiers. The following optional qualifiers are supported:
    *   - action:
    *   - actor:
