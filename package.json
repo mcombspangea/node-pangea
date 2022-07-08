@@ -16,10 +16,12 @@
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
+    "jsdoc": "^3.6.10",
     "prettier": "^2.6.0"
   },
   "scripts": {
     "test": "echo 'No tests yet'",
-    "lint": "npx prettier --check . && npx eslint ."
+    "lint": "npx prettier --check . && npx eslint .",
+    "print:docs:json": "node ./dev/generateDocs.js"
   }
 }
