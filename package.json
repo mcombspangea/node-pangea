@@ -22,6 +22,7 @@
   "scripts": {
     "test": "echo 'No tests yet'",
     "lint": "npx prettier --check . && npx eslint .",
-    "print:docs:json": "node ./dev/generateDocs.js"
+    "prettier:fix": "npx prettier . -w",
+    "print:docs:json": "node ./dev/generate_docs.js"
   }
 }

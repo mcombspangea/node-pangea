@@ -39,7 +39,7 @@ class RedactService extends BaseService {
    * @returns {Promise} - A promise representing an async call to the redactStructured endpoint
    * @example
    * const data = { "phone": "415-867-5309" };
-   * 
+   *
    * const response = await redact.redactStructured(data);
    */
   redactStructured(param) {

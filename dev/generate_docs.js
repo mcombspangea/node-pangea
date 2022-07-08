@@ -10,11 +10,11 @@ exec(
   `./node_modules/.bin/jsdoc -X -r ${DIRECTORY_TO_PULL_DOC_STRINGS}`,
   (error, stdout, stderr) => {
     if (error) {
-      console.log(`error: ${error.message}`);
+      console.log(`error: ${error.message}`); // eslint-disable-line
       return;
     }
     if (stderr) {
-      console.log(`stderr: ${stderr}`);
+      console.log(`stderr: ${stderr}`); // eslint-disable-line
       return;
     }
 
@@ -22,6 +22,6 @@ exec(
     const filtered = JSON.parse(stdout).filter(({ comment }) => comment !== "");
 
     // Output the filtered result to the console
-    console.log(JSON.stringify(filtered));
+    console.log(JSON.stringify(filtered)); // eslint-disable-line
   }
 );
