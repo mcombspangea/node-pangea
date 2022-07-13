@@ -1,12 +1,11 @@
 /* eslint-disable no-console */
-const DB = require("./utils/db");
-const { Employee } = require("./utils/employee");
-const { EmployeeStatus } = require("./utils/employee");
+import DB from "./utils/db";
+import { Employee, EmployeeStatus } from "./utils/employee";
 
-const PangeaConfig = require("../../src/config");
-const EmbargoService = require("../../src/services/embargo");
-const AuditService = require("../../src/services/audit");
-const RedactService = require("../../src/services/redact");
+import PangeaConfig from "../../src/config";
+import EmbargoService from "../../src/services/embargo";
+import AuditService from "../../src/services/audit";
+import RedactService from "../../src/services/redact";
 
 // Setup Pangea dependencies
 const TOKEN = process.env.PANGEA_TOKEN;
@@ -223,4 +222,4 @@ class App {
   }
 }
 
-module.exports = App;
+export default App;

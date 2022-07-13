@@ -11,6 +11,7 @@ The App simulates an HR application that allows a user to upload resumes, retrie
 ### Prerequisite
 
 - Node
+- ts-node
 
 #### Dependent modules
 
@@ -31,7 +32,7 @@ Set the following environment variables:
 ### Main App Startup
 
 ```
-node server.js
+ts-node server.js
 ```
 
 Will start a web server running on `http://localhost:8080`.

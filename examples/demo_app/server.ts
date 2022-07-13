@@ -2,14 +2,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
-const express = require("express");
-const bodyParser = require("body-parser");
+import express from "express";
+import bodyParser from "body-parser";
+import DemoApp from "./app";
+import basicAuth from "./utils/basicauth";
 
 const router = express.Router();
 const app = express();
-
-const DemoApp = require("./app");
-const basicAuth = require("./utils/basicauth");
 
 // Setup middleware
 app.use(basicAuth);

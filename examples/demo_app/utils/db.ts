@@ -1,7 +1,9 @@
 /* eslint-disable no-console */
-const sqlite3 = require("sqlite3");
+import sqlite3 from "sqlite3";
 
 class DB {
+  db: sqlite3.Database;
+
   constructor() {
     this.db = new sqlite3.Database("demo-app.db", (err) => {
       if (err) {
@@ -31,7 +33,7 @@ class DB {
     });
   }
 
-  get(sql, params = []) {
+  get(sql: string, params = []) {
     return new Promise((resolve, reject) => {
       // eslint-disable-next-line func-names
       this.db.get(sql, params, function (err, row) {
@@ -160,4 +162,4 @@ class DB {
   }
 }
 
-module.exports = DB;
+export default DB;

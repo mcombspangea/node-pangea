@@ -1,4 +1,4 @@
-const EmployeeStatus = {
+export const EmployeeStatus = {
   UNKNOWN: 1,
   CANDIDATE: 2,
   FULL_TIME: 3,
@@ -6,7 +6,7 @@ const EmployeeStatus = {
   TERMINATED: 5,
 };
 
-function Employee() {
+export function Employee() {
   this.employee_id = -1;
   this.first_name = "";
   this.last_name = "";
@@ -25,5 +25,3 @@ function Employee() {
   this.ssn = "";
   this.status = EmployeeStatus.UNKNOWN;
 }
-
-module.exports = { Employee, EmployeeStatus };

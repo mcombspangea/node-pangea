@@ -1,7 +1,7 @@
 {
   "name": "node-pangea",
-  "version": "0.1.0",
-  "main": "index.js",
+  "version": "0.2.0",
+  "main": "index.ts",
   "repository": "git@github.com:pangeacyber/node-pangea.git",
   "author": "Glenn Gallien <glenn.gallien@pangea.cloud>",
   "license": "MIT",
