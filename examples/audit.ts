@@ -1,5 +1,5 @@
-const PangeaConfig = require("../src/config");
-const AuditService = require("../src/services/audit");
+import PangeaConfig from "../src/config";
+import AuditService from "../src/services/audit";
 
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.AUDIT_CONFIG_ID;
@@ -28,7 +28,7 @@ const audit = new AuditService(token, config);
 
   // eslint-disable-next-line no-console
   console.log("Searching audit data...");
-  const searchResponse = await audit.search("success");
+  const searchResponse = await audit.search("");
 
   if (searchResponse.success) {
     // eslint-disable-next-line no-console

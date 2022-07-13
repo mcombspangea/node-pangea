@@ -1,11 +1,12 @@
-const BaseService = require("./base");
+import BaseService from "./base";
+import PangeaConfig from "../config";
 
 /**
  * EmbargoService class provides methods for interacting with the Embargo Service
  * @extends BaseService
  */
 class EmbargoService extends BaseService {
-  constructor(token, config) {
+  constructor(token: string, config: PangeaConfig) {
     super("embargo", token, config);
   }
 
@@ -19,7 +20,7 @@ class EmbargoService extends BaseService {
    * @example
    * const response = await embargo.check("1.1.1.1")
    */
-  check(ipAddress) {
+  check(ipAddress: string) {
     const data = {
       ip: ipAddress,
     };
@@ -28,4 +29,4 @@ class EmbargoService extends BaseService {
   }
 }
 
-module.exports = EmbargoService;
+export default EmbargoService;

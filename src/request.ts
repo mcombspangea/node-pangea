@@ -1,8 +1,21 @@
-const got = require("got");
-const pkg = require("../package.json");
+import got, { Options } from "got";
+import type { Response, Headers } from "got/dist/source";
+import pkg from "../package.json";
+import PangeaConfig from "./config";
+import { ResponseObject } from "./types";
+
+const delay = async (ms: number) =>
+  new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 
 class PangeaRequest {
-  constructor(serviceName, token, config) {
+  serviceName: string;
+  token: string;
+  config: PangeaConfig;
+  extraHeaders: Object;
+
+  constructor(serviceName: string, token: string, config: PangeaConfig) {
     if (!serviceName) throw new Error("A serviceName is required");
     if (!token) throw new Error("A token is required");
 
@@ -12,8 +25,8 @@ class PangeaRequest {
     this.extraHeaders = {};
   }
 
-  async post(endpoint, data) {
-    const options = {
+  async post(endpoint: string, data: object): Promise<Response> {
+    const options: Options = {
       url: this.getUrl(endpoint),
       headers: this.getHeaders(),
       json: data,
@@ -22,11 +35,12 @@ class PangeaRequest {
     };
 
     try {
-      const apiCall = await got.post(options);
+      const apiCall = (await got.post(options)) as Response;
 
-      if (apiCall.statusCode === "202" && this.config.asyncEnabled) {
-        const requestId = apiCall.body?.request_id;
-        const response = await this.handleAsync(requestId);
+      if (apiCall.statusCode === 202 && this.config.queuedRetryEnabled) {
+        const body = apiCall.body as ResponseObject;
+        const request_id = body?.request_id;
+        const response = await this.handleAsync(request_id);
         return response;
       }
       return apiCall;
@@ -35,10 +49,10 @@ class PangeaRequest {
     }
   }
 
-  async get(endpoint, path) {
+  async get(endpoint: string, path: string): Promise<Response> {
     const fullPath = !path ? endpoint : `${endpoint}/${path}`;
 
-    const options = {
+    const options: Options = {
       url: this.getUrl(fullPath),
       headers: this.getHeaders(),
       retry: this.config.requestRetries,
@@ -46,45 +60,45 @@ class PangeaRequest {
     };
 
     try {
-      return await got.get(options);
+      return (await got.get(options)) as Response;
     } catch (error) {
       return error.response;
     }
   }
 
-  async handleAsync(requestId) {
+  async handleAsync(requestId: string): Promise<Response> {
     let retryCount = 0;
 
-    while (retryCount < this.config.asyncRetries) {
+    while (retryCount < this.config.queuedRetries) {
       retryCount += 1;
-      const delay = retryCount * retryCount * 500;
+      const waitTime = retryCount * retryCount * 500;
 
       // eslint-disable-next-line no-await-in-loop
-      await this.sleep(delay);
+      await delay(waitTime);
       // eslint-disable-next-line no-await-in-loop
-      const response = await this.get("request", requestId);
+      const response = (await this.get("request", requestId)) as Response;
 
-      if (!(response.code === "202" && retryCount < this.config.asyncRetries)) {
+      if (!(response.statusCode === 202 && retryCount < this.config.queuedRetries)) {
         return response;
       }
     }
 
     // this should never be reached
-    return "";
+    return;
   }
 
   setExtraHeaders(headers) {
     this.extraHeaders = { ...headers };
   }
 
-  getUrl(path) {
+  getUrl(path: string): string {
     const versionPath = this.config.apiVersion ? `/${this.config.apiVersion}` : "";
     const url = `https://${this.serviceName}.${this.config.baseDomain}${versionPath}/${path}`;
 
     return url;
   }
 
-  getHeaders() {
+  getHeaders(): Headers {
     const headers = {
       "Content-Type": "application/json",
       "User-Agent": `Pangea Node ${pkg.version}`,
@@ -97,12 +111,6 @@ class PangeaRequest {
 
     return headers;
   }
-
-  static sleep(delay) {
-    return new Promise((resolve) => {
-      setTimeout(resolve, delay);
-    });
-  }
 }
 
-module.exports = PangeaRequest;
+export default PangeaRequest;
