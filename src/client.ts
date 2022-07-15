@@ -1,10 +1,21 @@
-const PangeaConfig = require("./config");
-const AuditService = require("./services/audit");
-const RedactService = require("./services/redact");
-const EmbargoService = require("./services/embargo");
+// import PangeaConfig = require("./config");
+// import AuditService = require("./services/audit");
+// import RedactService = require("./services/redact");
+// const EmbargoService = require("./services/embargo");
+
+import PangeaConfig from "./config";
+import AuditService from "./services/audit";
+import EmbargoService from "./services/embargo";
+import RedactService from "./services/redact";
 
 class PangeaClient {
-  constructor(token, config) {
+  token: string;
+  config: PangeaConfig;
+  auditService: AuditService;
+  redactService: RedactService;
+  embargoService: EmbargoService;
+
+  constructor(token: string, config: PangeaConfig) {
     this.token = token;
     this.config = config || new PangeaConfig();
 
@@ -15,7 +26,7 @@ class PangeaClient {
   }
 
   // TODO: auto-generate these wrappers
-  audit(token, config) {
+  audit(token: string, config: PangeaConfig) {
     const auditToken = token || this.token;
     const auditConfig = config || this.config;
 
@@ -26,7 +37,7 @@ class PangeaClient {
     return this.auditService;
   }
 
-  redact(token, config) {
+  redact(token: string, config: PangeaConfig) {
     const redactToken = token || this.token;
     const redactConfig = config || this.config;
 
@@ -37,7 +48,7 @@ class PangeaClient {
     return this.redactService;
   }
 
-  embargo(token, config) {
+  embargo(token: string, config: PangeaConfig) {
     const embargoToken = token || this.token;
     const embargoConfig = config || this.config;
 
@@ -49,4 +60,4 @@ class PangeaClient {
   }
 }
 
-module.exports = PangeaClient;
+export default PangeaClient;

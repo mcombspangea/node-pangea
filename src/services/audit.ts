@@ -1,25 +1,32 @@
-const BaseService = require("./base");
-
-const ConfigIdHeaderName = "X-Pangea-Audit-Config-ID";
+import PangeaResponse from "../response";
+import BaseService from "./base";
 
 const SupportedFields = ["actor", "action", "status", "source", "target"];
 
 const SupportedJSONFields = ["message", "new", "old"];
+
+interface AuditEvent {
+  message: string | JSON;
+  actor?: string;
+  action?: string;
+  status?: string;
+  source?: string;
+  new?: string | JSON;
+  old?: string | JSON;
+}
 
 /**
  * AuditService class provides methods for interacting with the Audit Service
  * @extends BaseService
  */
 class AuditService extends BaseService {
+  verify: boolean;
+
   constructor(token, config) {
     super("audit", token, config);
-
-    if (config.configId) {
-      const configIdHeader = {
-        [ConfigIdHeaderName]: config.configId,
-      };
-      this.request.setExtraHeaders(configIdHeader);
-    }
+    this.configIdHeaderName = "X-Pangea-Audit-Config-ID";
+    this.verify = false;
+    this.init();
   }
 
   /**
@@ -48,7 +55,7 @@ class AuditService extends BaseService {
    *
    *  const logResponse = await audit.log(auditData);
    */
-  log(content) {
+  log(content: AuditEvent): Promise<PangeaResponse> {
     const event = {};
 
     SupportedFields.forEach((key) => {
@@ -89,18 +96,58 @@ class AuditService extends BaseService {
    * @example
    * const response = await audit.search("add_employee:Gumby")
    */
-  search(query, options = {}) {
-    const validOptions = ["page_size", "start", "end", "sources"];
+  search(query: string, options = {}): Promise<PangeaResponse> {
+    const defaults = {
+      limit: 20,
+      start: "",
+      end: "",
+    };
+    // const payload = Object.assign({ query }, defaults, options);
     const payload = { query };
-
-    validOptions.forEach((name) => {
+    Object.keys(defaults).forEach((name) => {
       if (name in options) {
         payload[name] = options[name];
+      } else if (defaults[name] !== "") {
+        payload[name] = defaults[name];
       }
     });
 
+    // pass restriction as search_restriction
+    if ("restriction" in options) {
+      payload["search_restriction"] = options["restriction"];
+    }
+
+    // Store the verify mode for the search, used by results
+    if ("verify" in options) {
+      this.verify = options["verify"];
+    }
+
     return this.post("search", payload);
+  }
+
+  /**
+   * @summary Results of a search
+   * @description Fetch paginated results of a previously executed search
+   * @param {String} id - The id of a successful search
+   * @param {number} limit (default 20) - The number of results returned
+   * @param {number} offset (default 0) - The starting position of the first returned result
+   * @returns {Promise} - A promise representing an async call to the results endpoint
+   * @example
+   * const response = await audit.results(pxx_asd0987asdas89a8, 50, 100)
+   */
+  results(id: string, limit = 20, offset = 0): Promise<PangeaResponse> {
+    if (!id) {
+      throw new Error("Missing required `id` parameter");
+    }
+
+    const payload = {
+      id,
+      limit,
+      offset,
+    };
+
+    return this.post("results", payload);
   }
 }
 
-module.exports = AuditService;
+export default AuditService;

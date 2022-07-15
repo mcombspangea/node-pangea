@@ -11,4 +11,4 @@ async function basicAuth(req, res, next) {
   next();
 }
 
-module.exports = basicAuth;
+export default basicAuth;

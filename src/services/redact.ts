@@ -1,21 +1,15 @@
-const BaseService = require("./base");
-
-const ConfigIdHeaderName = "X-Pangea-Redact-Config-ID";
+import BaseService from "./base";
+import PangeaConfig from "../config";
 
 /**
  * RedactService class provides methods for interacting with the Redact Service
  * @extends BaseService
  */
 class RedactService extends BaseService {
-  constructor(token, config) {
+  constructor(token: string, config: PangeaConfig) {
     super("redact", token, config);
-
-    if (config.configId) {
-      const configIdHeader = {
-        [ConfigIdHeaderName]: config.configId,
-      };
-      this.request.setExtraHeaders(configIdHeader);
-    }
+    this.configIdHeaderName = "X-Pangea-Redact-Config-ID";
+    this.init();
   }
 
   /**
@@ -26,8 +20,8 @@ class RedactService extends BaseService {
    * @example
    * const response = await redact.redact("Jenny Jenny... 415-867-5309");
    */
-  redact(param) {
-    const data = { param };
+  redact(text: string) {
+    const data = { text };
 
     return this.post("redact", data);
   }
@@ -42,11 +36,11 @@ class RedactService extends BaseService {
    *
    * const response = await redact.redactStructured(data);
    */
-  redactStructured(param) {
+  redactStructured(param: object) {
     const input = { data: param };
 
     return this.post("redact_structured", input);
   }
 }
 
-module.exports = RedactService;
+export default RedactService;
