@@ -1,5 +1,9 @@
 image: node
 
+default:
+  tags:
+    - pangea-internal
+
 cache:
   paths:
     - node_modules/
