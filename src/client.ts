@@ -11,9 +11,9 @@ import RedactService from "./services/redact";
 class PangeaClient {
   token: string;
   config: PangeaConfig;
-  auditService: AuditService;
-  redactService: RedactService;
-  embargoService: EmbargoService;
+  auditService: AuditService | null;
+  redactService: RedactService | null;
+  embargoService: EmbargoService | null;
 
   constructor(token: string, config: PangeaConfig) {
     this.token = token;
@@ -26,7 +26,7 @@ class PangeaClient {
   }
 
   // TODO: auto-generate these wrappers
-  audit(token: string, config: PangeaConfig) {
+  audit(token: string, config: PangeaConfig): AuditService {
     const auditToken = token || this.token;
     const auditConfig = config || this.config;
 
@@ -37,7 +37,7 @@ class PangeaClient {
     return this.auditService;
   }
 
-  redact(token: string, config: PangeaConfig) {
+  redact(token: string, config: PangeaConfig): RedactService {
     const redactToken = token || this.token;
     const redactConfig = config || this.config;
 
@@ -48,7 +48,7 @@ class PangeaClient {
     return this.redactService;
   }
 
-  embargo(token: string, config: PangeaConfig) {
+  embargo(token: string, config: PangeaConfig): EmbargoService {
     const embargoToken = token || this.token;
     const embargoConfig = config || this.config;
 

@@ -1,5 +1,6 @@
 import PangeaResponse from "../response";
 import BaseService from "./base";
+import PangeaConfig from "../config";
 
 const SupportedFields = ["actor", "action", "status", "source", "target"];
 
@@ -22,7 +23,7 @@ interface AuditEvent {
 class AuditService extends BaseService {
   verify: boolean;
 
-  constructor(token, config) {
+  constructor(token: string, config: PangeaConfig) {
     super("audit", token, config);
     this.configIdHeaderName = "X-Pangea-Audit-Config-ID";
     this.verify = false;
@@ -88,7 +89,7 @@ class AuditService extends BaseService {
    *   - status:
    *   - target:
    * @param {Object} options - Search options. The following search options are supported:
-   *   - page_size (number): Maximum number of records to return per page.
+   *   - limit (number): Maximum number of records to return per page.
    *   - start (string): The start of the time range to perform the search on.
    *   - end (string): The end of the time range to perform the search on. All records up to the latest if left out.
    *   - sources (array): A list of sources that the search can apply to. If empty or not provided, matches only the default source.
@@ -102,7 +103,7 @@ class AuditService extends BaseService {
       start: "",
       end: "",
     };
-    // const payload = Object.assign({ query }, defaults, options);
+
     const payload = { query };
     Object.keys(defaults).forEach((name) => {
       if (name in options) {
@@ -147,6 +148,24 @@ class AuditService extends BaseService {
     };
 
     return this.post("results", payload);
+  }
+
+  /**
+   * @summary Retrieve tamperproof verification
+   * @description Returns current root hash and consistency proof
+   * @param {number} size - The size of the tree (the number of records)
+   * @returns {Promise} - A promise representing an async call to the results endpoint
+   * @example
+   * const response = audit.root(7);
+   */
+  root(size: number = 0): Promise<PangeaResponse> {
+    const data = {};
+
+    if (size > 0) {
+      data["tree_size"] = size;
+    }
+
+    return this.post("root", data);
   }
 }
 

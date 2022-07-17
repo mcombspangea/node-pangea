@@ -1,3 +1,4 @@
+import PangeaResponse from "../response";
 import BaseService from "./base";
 import PangeaConfig from "../config";
 
@@ -12,20 +13,35 @@ class EmbargoService extends BaseService {
 
   /**
    * @summary Embargo
-   * @description Check IPs and country codes against known sanction and trade embargo lists.
+   * @description Check an IP against known sanction and trade embargo lists.
    * @param {String} ipAddress - Geolocate this IP and check the corresponding country against
-   *   the enabled embargo lists. Note: Either the IP or ISO_CODE parameter must be provided,
-   *   not both.
+   *   the enabled embargo lists.
    * @returns {Promise} - A promise representing an async call to the check endpoint
    * @example
-   * const response = await embargo.check("1.1.1.1")
+   * const response = await embargo.ipCheck("1.1.1.1")
    */
-  check(ipAddress: string) {
+  ipCheck(ipAddress: string): Promise<PangeaResponse> {
     const data = {
       ip: ipAddress,
     };
 
-    return this.post("check", data);
+    return this.post("ip/check", data);
+  }
+
+  /**
+   * @summary Embargo
+   * @description Check a country code against known sanction and trade embargo lists.
+   * @param {String} isoCode - Check the  country against code the enabled embargo lists.
+   * @returns {Promise} - A promise representing an async call to the check endpoint
+   * @example
+   * const response = await embargo.isoCheck("CU")
+   */
+  isoCheck(isoCode: string): Promise<PangeaResponse> {
+    const data = {
+      iso_code: isoCode,
+    };
+
+    return this.post("iso/check", data);
   }
 }
 
