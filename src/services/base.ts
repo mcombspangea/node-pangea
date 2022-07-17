@@ -18,7 +18,7 @@ class BaseService {
     - config: a PangeaConfig object, uses defaults if non passed
     - responseClass: a custom Response handler class, defaults to PangeaResponse
   */
-  constructor(serviceName, token, config) {
+  constructor(serviceName: string, token: string, config: PangeaConfig) {
     if (!serviceName) throw new Error("A serviceName is required");
 
     this.configIdHeaderName = "";
