@@ -11,9 +11,9 @@ import RedactService from "./services/redact";
 class PangeaClient {
   token: string;
   config: PangeaConfig;
-  auditService: AuditService|null;
-  redactService: RedactService|null;
-  embargoService: EmbargoService|null;
+  auditService: AuditService | null;
+  redactService: RedactService | null;
+  embargoService: EmbargoService | null;
 
   constructor(token: string, config: PangeaConfig) {
     this.token = token;

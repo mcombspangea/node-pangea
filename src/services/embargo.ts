@@ -12,7 +12,7 @@ class EmbargoService extends BaseService {
   }
 
   /**
-   * @summary Embargo 
+   * @summary Embargo
    * @description Check an IP against known sanction and trade embargo lists.
    * @param {String} ipAddress - Geolocate this IP and check the corresponding country against
    *   the enabled embargo lists.
