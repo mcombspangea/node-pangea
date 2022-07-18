@@ -53,7 +53,7 @@ class App {
     console.log("[App.uploadResume] processing request from: ", user, clientIp, data);
 
     // Embargo check on submission client IP address, disallow sanctioned countries
-    const response = await embargo.check(clientIp);
+    const response = await embargo.ipCheck(clientIp);
 
     console.log("[App.uploadResume] Embargo response: ", response?.code, response?.result);
 

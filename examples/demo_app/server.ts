@@ -63,12 +63,12 @@ router.post("/upload_resume", (req, res) => {
 router.get("/employee/:email", (req, res) => {
   const demo = new DemoApp();
 
-  demo.fetchEmployeeRecord(req.user, req.params.email).then(({ code, employee }) => {
+  demo.fetchEmployeeRecord(req.user, req.params.email).then(({ code, emp }) => {
     demo.shutdown();
 
     res.statusCode = code;
     res.setHeader("Content-type", "application/json");
-    res.end(JSON.stringify({ employee }));
+    res.end(JSON.stringify({ emp }));
   });
 });
 
