@@ -6,12 +6,15 @@
   "author": "Glenn Gallien <glenn.gallien@pangea.cloud>",
   "license": "MIT",
   "dependencies": {
-    "got": "^11.8.5"
+    "crypto-js": "^4.1.1",
+    "got": "^11.8.5",
+    "merkle-tools": "^1.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
     "@babel/eslint-parser": "^7.18.2",
     "@gitlab/eslint-config": "^4.0.0",
+    "@types/crypto-js": "^4.1.1",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
