@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import PangeaConfig from "../src/config";
 import AuditService from "../src/services/audit";
 
@@ -14,29 +16,36 @@ const audit = new AuditService(token, config);
     message: "node-sdk test message",
   };
 
-  // eslint-disable-next-line no-console
   console.log("Logging audit data...");
   const logResponse = await audit.log(data);
 
   if (logResponse.success) {
-    // eslint-disable-next-line no-console
     console.log("Success:", logResponse.result);
   } else {
-    // eslint-disable-next-line no-console
     console.log("Error", logResponse.code, logResponse.result);
   }
 
-  // eslint-disable-next-line no-console
   console.log("Searching audit data...");
-  const searchResponse = await audit.search("");
+  const searchResponse = await audit.search("message:test", {
+    restriction: { source: ["monitor"] },
+    limit: 10,
+    verify: true,
+  });
 
   if (searchResponse.success) {
-    // eslint-disable-next-line no-console
     console.log("Status", searchResponse.code);
-    // eslint-disable-next-line no-console
-    console.log("Events", searchResponse.result.events);
+
+    searchResponse.result.events.forEach((row) => {
+      console.log(
+        row.event.received_at,
+        row.event.message,
+        row.event.source,
+        row.event.actor,
+        row.event.membership_proof,
+        row.event.consistency_proof
+      );
+    });
   } else {
-    // eslint-disable-next-line no-console
     console.log("Error", searchResponse.code, searchResponse.result);
   }
 })();

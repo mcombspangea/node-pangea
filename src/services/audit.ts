@@ -1,32 +1,28 @@
 import PangeaResponse from "../response";
 import BaseService from "./base";
 import PangeaConfig from "../config";
+import { Audit } from "../types";
+import { PublishedRoots, getArweavePublishedRoots } from "../utils/arweave";
+import { verifyConsistencyProof, verifyMembershipProof } from "../utils/verification";
 
 const SupportedFields = ["actor", "action", "status", "source", "target"];
 
 const SupportedJSONFields = ["message", "new", "old"];
-
-interface AuditEvent {
-  message: string | JSON;
-  actor?: string;
-  action?: string;
-  status?: string;
-  source?: string;
-  new?: string | JSON;
-  old?: string | JSON;
-}
 
 /**
  * AuditService class provides methods for interacting with the Audit Service
  * @extends BaseService
  */
 class AuditService extends BaseService {
-  verify: boolean;
+  publishedRoots: PublishedRoots;
+  verifyResponse: boolean;
 
   constructor(token: string, config: PangeaConfig) {
     super("audit", token, config);
+    this.publishedRoots = {};
     this.configIdHeaderName = "X-Pangea-Audit-Config-ID";
-    this.verify = false;
+    this.verifyResponse = false;
+    this.publishedRoots = {};
     this.init();
   }
 
@@ -56,7 +52,7 @@ class AuditService extends BaseService {
    *
    *  const logResponse = await audit.log(auditData);
    */
-  log(content: AuditEvent): Promise<PangeaResponse> {
+  log(content: Audit.AuditRecord): Promise<PangeaResponse> {
     const event = {};
 
     SupportedFields.forEach((key) => {
@@ -97,11 +93,16 @@ class AuditService extends BaseService {
    * @example
    * const response = await audit.search("add_employee:Gumby")
    */
-  search(query: string, options = {}): Promise<PangeaResponse> {
+  async search(query: string, options = {}): Promise<PangeaResponse> {
     const defaults = {
       limit: 20,
       start: "",
       end: "",
+      order: "desc",
+      order_by: "received_at",
+      include_membership_proof: true,
+      include_hash: true,
+      include_root: true,
     };
 
     const payload = { query };
@@ -120,10 +121,12 @@ class AuditService extends BaseService {
 
     // Store the verify mode for the search, used by results
     if ("verify" in options) {
-      this.verify = options["verify"];
+      this.verifyResponse = options["verify"];
     }
 
-    return this.post("search", payload);
+    const response: PangeaResponse = await this.post("search", payload);
+
+    return this.processSearchResponse(response);
   }
 
   /**
@@ -136,7 +139,7 @@ class AuditService extends BaseService {
    * @example
    * const response = await audit.results(pxx_asd0987asdas89a8, 50, 100)
    */
-  results(id: string, limit = 20, offset = 0): Promise<PangeaResponse> {
+  async results(id: string, limit = 20, offset = 0): Promise<PangeaResponse> {
     if (!id) {
       throw new Error("Missing required `id` parameter");
     }
@@ -147,7 +150,9 @@ class AuditService extends BaseService {
       offset,
     };
 
-    return this.post("results", payload);
+    const response: PangeaResponse = await this.post("results", payload);
+
+    return this.processSearchResponse(response);
   }
 
   /**
@@ -166,6 +171,72 @@ class AuditService extends BaseService {
     }
 
     return this.post("root", data);
+  }
+
+  async processSearchResponse(response: PangeaResponse) {
+    if (!response.success) {
+      return response;
+    }
+
+    const root: PublishedRoots = response.result.root;
+    const localRoot = async (treeSize: number) => {
+      const response = await this.root(treeSize);
+      const root: Audit.RootResponse = response?.result?.data;
+      return root;
+    };
+
+    if (!root) {
+      response.result.root = {};
+      return response;
+    }
+
+    if (this.verifyResponse) {
+      if (!root?.tree_name) return;
+
+      const treeName = root?.tree_name;
+      const treeSizes = new Set<number>();
+      treeSizes.add(root?.size ?? 0);
+
+      response.result.events.forEach((log) => {
+        if (log.leaf_index !== undefined) {
+          const idx = Number(log.leaf_index);
+          treeSizes.add(idx + 1);
+          if (idx > 0) {
+            treeSizes.add(idx);
+          }
+        }
+      });
+
+      this.publishedRoots = await getArweavePublishedRoots(
+        treeName,
+        Array.from(treeSizes),
+        localRoot
+      );
+
+      response.result.events.forEach((record) => {
+        if (record.leaf_index) {
+          const consistency = verifyConsistencyProof({
+            publishedRoots: this.publishedRoots,
+            record: record,
+          });
+          record.event.consistency_proof = consistency ? "pass" : "fail";
+        } else {
+          record.event.consistency_proof = "none";
+        }
+
+        if (record.membership_proof) {
+          const membership = verifyMembershipProof({
+            root: response.result.root,
+            record: record,
+          });
+          record.event.membership_proof = membership ? "pass" : "fail";
+        } else {
+          record.event.membership_proof = "none";
+        }
+      });
+
+      return response;
+    }
   }
 }
 

@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 import PangeaConfig from "../src/config";
 import EmbargoService from "../src/services/embargo";
 
@@ -10,10 +12,8 @@ const embargo = new EmbargoService(token, config);
   const response = await embargo.ipCheck("213.24.238.26");
 
   if (response.success) {
-    // eslint-disable-next-line no-console
     console.log("Success:", response.result);
   } else {
-    // eslint-disable-next-line no-console
     console.log("Error", response.code, response.result);
   }
 })();
