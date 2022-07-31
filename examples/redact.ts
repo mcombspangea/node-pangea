@@ -17,3 +17,13 @@ const redact = new RedactService(token, config);
     console.log("Error", response.code, response.result);
   }
 })();
+
+(async () => {
+  const response = await redact.redactStructured({ phone: "415-867-5309" });
+
+  if (response.success) {
+    console.log("Success:", response.result);
+  } else {
+    console.log("Error", response.code, response.result);
+  }
+})();

@@ -52,7 +52,7 @@ class AuditService extends BaseService {
    *
    *  const logResponse = await audit.log(auditData);
    */
-  log(content: Audit.AuditRecord): Promise<PangeaResponse> {
+  log(content: Audit.Event): Promise<PangeaResponse<Audit.LogResponse>> {
     const event = {};
 
     SupportedFields.forEach((key) => {
@@ -93,7 +93,7 @@ class AuditService extends BaseService {
    * @example
    * const response = await audit.search("add_employee:Gumby")
    */
-  async search(query: string, options = {}): Promise<PangeaResponse> {
+  async search(query: string, options = {}): Promise<PangeaResponse<Audit.SearchResponse>> {
     const defaults = {
       limit: 20,
       start: "",
@@ -124,7 +124,7 @@ class AuditService extends BaseService {
       this.verifyResponse = options["verify"];
     }
 
-    const response: PangeaResponse = await this.post("search", payload);
+    const response: PangeaResponse<Audit.SearchResponse> = await this.post("search", payload);
 
     return this.processSearchResponse(response);
   }
@@ -139,7 +139,7 @@ class AuditService extends BaseService {
    * @example
    * const response = await audit.results(pxx_asd0987asdas89a8, 50, 100)
    */
-  async results(id: string, limit = 20, offset = 0): Promise<PangeaResponse> {
+  async results(id: string, limit = 20, offset = 0): Promise<PangeaResponse<Audit.ResultResponse>> {
     if (!id) {
       throw new Error("Missing required `id` parameter");
     }
@@ -150,7 +150,7 @@ class AuditService extends BaseService {
       offset,
     };
 
-    const response: PangeaResponse = await this.post("results", payload);
+    const response: PangeaResponse<Audit.SearchResponse> = await this.post("results", payload);
 
     return this.processSearchResponse(response);
   }
@@ -163,7 +163,7 @@ class AuditService extends BaseService {
    * @example
    * const response = audit.root(7);
    */
-  root(size: number = 0): Promise<PangeaResponse> {
+  root(size: number = 0): Promise<PangeaResponse<Audit.RootResponse>> {
     const data = {};
 
     if (size > 0) {
@@ -173,12 +173,14 @@ class AuditService extends BaseService {
     return this.post("root", data);
   }
 
-  async processSearchResponse(response: PangeaResponse) {
+  async processSearchResponse(
+    response: PangeaResponse<Audit.SearchResponse>
+  ): Promise<PangeaResponse<Audit.SearchResponse>> {
     if (!response.success) {
       return response;
     }
 
-    const root: PublishedRoots = response.result.root;
+    const root: Audit.Root = response.result.root;
     const localRoot = async (treeSize: number) => {
       const response = await this.root(treeSize);
       const root: Audit.RootResponse = response?.result?.data;
@@ -186,7 +188,7 @@ class AuditService extends BaseService {
     };
 
     if (!root) {
-      response.result.root = {};
+      // response.result.root = {};
       return response;
     }
 
@@ -234,9 +236,8 @@ class AuditService extends BaseService {
           record.event.membership_proof = "none";
         }
       });
-
-      return response;
     }
+    return response;
   }
 }
 

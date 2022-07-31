@@ -15,6 +15,13 @@ stages:
   - integration_tests
   - publish
 
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: always
+    - if: $CI_COMMIT_BRANCH == "main"
+      when: always
+
 before_script:
   - yarn config set cache-folder .yarn
   - yarn install
@@ -28,12 +35,12 @@ lint:
 testing:
   stage: unit_tests
   script:
-    - echo "Unit tests..."
+    - yarn test:unit
 
 integration:
   stage: integration_tests
   script:
-    - echo "Integration tests..."
+    - yarn test:integration
 
 publish:
   stage: publish

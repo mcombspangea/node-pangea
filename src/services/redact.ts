@@ -1,6 +1,7 @@
 import PangeaResponse from "../response";
 import BaseService from "./base";
 import PangeaConfig from "../config";
+import { Redact } from "../types";
 
 /**
  * RedactService class provides methods for interacting with the Redact Service
@@ -21,7 +22,7 @@ class RedactService extends BaseService {
    * @example
    * const response = await redact.redact("Jenny Jenny... 415-867-5309");
    */
-  redact(text: string): Promise<PangeaResponse> {
+  redact(text: string): Promise<PangeaResponse<Redact.BaseResponse>> {
     const input = { text };
 
     return this.post("redact", input);
@@ -37,7 +38,7 @@ class RedactService extends BaseService {
    *
    * const response = await redact.redactStructured(data);
    */
-  redactStructured(data: object): Promise<PangeaResponse> {
+  redactStructured(data: object): Promise<PangeaResponse<Redact.StructuredResponse>> {
     const input = { data };
 
     return this.post("redact_structured", input);

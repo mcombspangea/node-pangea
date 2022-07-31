@@ -1,6 +1,7 @@
 import PangeaResponse from "../response";
 import BaseService from "./base";
 import PangeaConfig from "../config";
+import { Embargo } from "../types";
 
 /**
  * EmbargoService class provides methods for interacting with the Embargo Service
@@ -20,7 +21,7 @@ class EmbargoService extends BaseService {
    * @example
    * const response = await embargo.ipCheck("1.1.1.1")
    */
-  ipCheck(ipAddress: string): Promise<PangeaResponse> {
+  ipCheck(ipAddress: string): Promise<PangeaResponse<Embargo.CheckResponse>> {
     const data = {
       ip: ipAddress,
     };
@@ -36,7 +37,7 @@ class EmbargoService extends BaseService {
    * @example
    * const response = await embargo.isoCheck("CU")
    */
-  isoCheck(isoCode: string): Promise<PangeaResponse> {
+  isoCheck(isoCode: string): Promise<PangeaResponse<Embargo.CheckResponse>> {
     const data = {
       iso_code: isoCode,
     };

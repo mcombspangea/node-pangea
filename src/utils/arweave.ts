@@ -57,7 +57,8 @@ export const getArweavePublishedRoots = async (
   if (response.statusCode !== 200) return {};
 
   const publishedRoots: PublishedRoots = {};
-  const edges = response.body?.data?.transactions?.edges ?? [];
+  const body: any = response.body as JSON;
+  const edges = body?.data?.transactions?.edges ?? [];
 
   for (let idx = 0; idx < edges.length; idx++) {
     const edge = edges[idx];
@@ -93,10 +94,8 @@ export const getArweavePublishedRoots = async (
       });
 
       if (root) {
-        const transactionId = "";
         publishedRoots[treeSize] = {
           ...root,
-          transactionId,
         };
       }
     }
