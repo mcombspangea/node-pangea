@@ -17,3 +17,13 @@ const embargo = new EmbargoService(token, config);
     console.log("Error", response.code, response.result);
   }
 })();
+
+(async () => {
+  const response = await embargo.isoCheck("CU");
+
+  if (response.success) {
+    console.log("Success:", response.result);
+  } else {
+    console.log("Error", response.code, response.result);
+  }
+})();

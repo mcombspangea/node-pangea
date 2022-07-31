@@ -42,13 +42,13 @@ class BaseService {
     }
   }
 
-  async get(endpoint: string, path: string): Promise<PangeaResponse> {
+  async get(endpoint: string, path: string): Promise<PangeaResponse<any>> {
     const gotResponse = await this.request.get(endpoint, path);
 
     return new PangeaResponse(gotResponse);
   }
 
-  async post(endpoint: string, data: object): Promise<PangeaResponse> {
+  async post(endpoint: string, data: object): Promise<PangeaResponse<any>> {
     const gotResponse = await this.request.post(endpoint, data);
 
     return new PangeaResponse(gotResponse);

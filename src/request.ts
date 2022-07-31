@@ -38,7 +38,7 @@ class PangeaRequest {
       const apiCall = (await got.post(options)) as Response;
 
       if (apiCall.statusCode === 202 && this.config.queuedRetryEnabled) {
-        const body = apiCall.body as ResponseObject;
+        const body = apiCall.body as ResponseObject<any>;
         const request_id = body?.request_id;
         const response = await this.handleAsync(request_id);
         return response;

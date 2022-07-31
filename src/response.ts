@@ -2,10 +2,10 @@ import type { Response } from "got/dist/source";
 import { HTTPError } from "got/dist/source";
 import type { ResponseObject } from "./types";
 
-class PangeaResponse {
+class PangeaResponse<M> {
   gotResponse: Response;
   success: boolean;
-  data: ResponseObject | undefined;
+  data: ResponseObject<M> | undefined;
   status: string;
   code: number;
 
@@ -23,11 +23,11 @@ class PangeaResponse {
     this.code = this.gotResponse.statusCode || 0;
 
     if (this.gotResponse.body instanceof Object) {
-      this.data = this.gotResponse.body as ResponseObject;
+      this.data = this.gotResponse.body as ResponseObject<any>;
     }
   }
 
-  get result(): object {
+  get result(): M {
     return this.data?.result;
   }
 

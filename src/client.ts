@@ -1,8 +1,3 @@
-// import PangeaConfig = require("./config");
-// import AuditService = require("./services/audit");
-// import RedactService = require("./services/redact");
-// const EmbargoService = require("./services/embargo");
-
 import PangeaConfig from "./config";
 import AuditService from "./services/audit";
 import EmbargoService from "./services/embargo";

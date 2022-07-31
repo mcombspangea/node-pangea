@@ -16,12 +16,12 @@ export interface ConfigOptions {
  * Pangea Response object
  */
 
-export interface ResponseObject {
+export interface ResponseObject<M> {
   request_id: string;
   request_time: string;
   status_code: number;
   status: string;
-  result: JSON;
+  result: M;
   summary: string;
 }
 
@@ -29,8 +29,7 @@ export interface ResponseObject {
  * Secure Audit interface definitions
  */
 export namespace Audit {
-  export interface AuditRecord {
-    id?: number;
+  export interface Event {   
     message: string;
     actor?: string;
     action?: string;
@@ -40,9 +39,16 @@ export namespace Audit {
     target?: string;
     received_at?: string;
     source?: string;
+    consistency_proof?: string;
+    membership_proof?: string;
+  }
+
+  export interface AuditRecord {
+    id?: number;    
     leaf_index?: string;
     membership_proof?: string;
     hash?: string;
+    event: Event;
   }
 
   export interface Root {
@@ -54,11 +60,15 @@ export namespace Audit {
     tree_name: string;
   }
 
+  export interface LogResponse {
+    hash: string;
+  }
+
   export interface SearchResponse {
-    id: string;
+    id?: string;
     count: number;
     events: AuditRecord[];
-    expires_at: string;
+    expires_at?: string;
     root: Root;
   }
 
@@ -72,5 +82,31 @@ export namespace Audit {
     tree_size?: number;
   }
 
-  export interface RootResponse extends Root {}
+  export interface RootResponse extends Root {
+    data?: Root;
+  }
+}
+
+export namespace Redact {
+  export interface BaseResponse {
+    redacted_data: string;
+  }
+
+  export interface StructuredResponse {
+    redacted_data: object;
+  }
+}
+
+export namespace Embargo {
+  export interface Sanction {
+    list_name: string;
+    embargoed_country_name: string;
+    embargoed_country_iso_code: string;
+    issuing_country: string;
+    annotations: object;
+  } 
+
+  export interface CheckResponse {
+    sanctions: Sanction[];
+  }
 }
