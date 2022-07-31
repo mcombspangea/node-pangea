@@ -173,7 +173,9 @@ class AuditService extends BaseService {
     return this.post("root", data);
   }
 
-  async processSearchResponse(response: PangeaResponse<Audit.SearchResponse>): Promise<PangeaResponse<Audit.SearchResponse>> {
+  async processSearchResponse(
+    response: PangeaResponse<Audit.SearchResponse>
+  ): Promise<PangeaResponse<Audit.SearchResponse>> {
     if (!response.success) {
       return response;
     }
@@ -234,7 +236,6 @@ class AuditService extends BaseService {
           record.event.membership_proof = "none";
         }
       });
-      
     }
     return response;
   }

@@ -29,7 +29,7 @@ export interface ResponseObject<M> {
  * Secure Audit interface definitions
  */
 export namespace Audit {
-  export interface Event {   
+  export interface Event {
     message: string;
     actor?: string;
     action?: string;
@@ -44,7 +44,7 @@ export namespace Audit {
   }
 
   export interface AuditRecord {
-    id?: number;    
+    id?: number;
     leaf_index?: string;
     membership_proof?: string;
     hash?: string;
@@ -104,7 +104,7 @@ export namespace Embargo {
     embargoed_country_iso_code: string;
     issuing_country: string;
     annotations: object;
-  } 
+  }
 
   export interface CheckResponse {
     sanctions: Sanction[];

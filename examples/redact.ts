@@ -19,7 +19,7 @@ const redact = new RedactService(token, config);
 })();
 
 (async () => {
-  const response = await redact.redactStructured({ "phone": "415-867-5309" });
+  const response = await redact.redactStructured({ phone: "415-867-5309" });
 
   if (response.success) {
     console.log("Success:", response.result);
