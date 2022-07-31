@@ -1,6 +1,6 @@
 {
   "name": "node-pangea",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "main": "index.ts",
   "repository": "git@github.com:pangeacyber/node-pangea.git",
   "author": "Glenn Gallien <glenn.gallien@pangea.cloud>",
