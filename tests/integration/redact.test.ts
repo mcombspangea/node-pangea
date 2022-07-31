@@ -1,9 +1,10 @@
 import PangeaConfig from "../../src/config";
 import RedactService from "../../src/services/redact";
 
-const token = process.env.PANGEA_TOKEN || '';
-const configId = process.env.REDACT_CONFIG_ID || '';
-const config = new PangeaConfig({ baseDomain: "dev.pangea.cloud", configId });
+const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || '';
+const configId = process.env.REDACT_INTEGRATION_CONFIG_TOKEN || '';
+const testHost = process.env.PANGEA_TEST_INTEGRATION_ENDPOINT || '';
+const config = new PangeaConfig({ baseDomain: testHost, configId });
 const redact = new RedactService(token, config);
 
 it("redact a data string", async () => {

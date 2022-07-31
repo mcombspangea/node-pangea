@@ -1,9 +1,10 @@
 import PangeaConfig from "../../src/config";
 import EmbargoService from "../../src/services/embargo";
 
-const token = process.env.PANGEA_TOKEN || '';
-const configId = process.env.EMBARGO_CONFIG_ID || '';
-const config = new PangeaConfig({ baseDomain: "dev.pangea.cloud", configId });
+const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || '';
+const configId = process.env.EMBARGO_INTEGRATION_CONFIG_TOKEN || '';
+const testHost = process.env.PANGEA_TEST_INTEGRATION_ENDPOINT || '';
+const config = new PangeaConfig({ baseDomain: testHost, configId });
 const embargo = new EmbargoService(token, config);
 
 it("check IP in Russia", async () => {
