@@ -29,6 +29,8 @@
   },
   "scripts": {
     "test": "jest",
+    "test:unit": "jest --testPathPattern=tests/unit",
+    "test:integration": "jest --testPathPattern=tests/integration",
     "lint": "npx prettier --check . && npx eslint .",
     "prettier:fix": "npx prettier . -w",
     "print:docs:json": "node ./dev/generate_docs.js"

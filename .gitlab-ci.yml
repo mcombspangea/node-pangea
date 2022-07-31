@@ -37,12 +37,12 @@ lint:
 testing:
   stage: unit_tests
   script:
-    - echo "Unit tests..."
+    - yarn test:unit
 
 integration:
   stage: integration_tests
   script:
-    - echo "Integration tests..."
+    - yarn test:integration
 
 publish:
   stage: publish
