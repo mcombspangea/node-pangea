@@ -8,8 +8,6 @@
 
 # Pangea Node SDK
 
-## Overview
-
 A javascript SDK for using Pangea APIs in a Node application.
 
 ## Installation
