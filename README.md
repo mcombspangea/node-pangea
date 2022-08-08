@@ -1,10 +1,64 @@
+<p align="center">
+  <a href="https://pangea.cloud?utm_source=github&utm_medium=node-sdk" target="_blank" rel="noopener noreferrer">
+    <img src="https://pangea-marketing.s3.us-west-2.amazonaws.com/pangea-color.png" alt="Pangea Logo" height="24">
+  </a>
+  <br />
+</p>
+
 # Pangea Node SDK
 
-# Usage
+## Overview
 
-TODO
+A javascript SDK for using Pangea APIs in a Node application.
 
-# Contributing
+## Installation
+
+```sh
+yarn add node-pangea
+# or
+npm install node-pangea
+```
+
+## Usage
+
+```js
+import PangeaConfig from "node-pangea/config";
+import AuditService from "node-pangea/services/audit";
+
+const token = process.env.PANGEA_TOKEN;
+const configId = process.env.AUDIT_CONFIG_ID;
+const config = new PangeaConfig({  configId });
+const audit = new AuditService(token, config);
+
+// log an audit event
+const data = {
+  actor: "user@mail.com",
+  action: "update",
+  status: "success",
+  message: "delete record",
+};
+const logResponse = await audit.log(data);
+
+// search an audit log
+const searchResponse = await audit.search("message:delete", {
+  limit: 10,
+  verify: true,
+});
+
+searchResponse.result.events.forEach((row) => {
+  console.log(
+    row.event.received_at,
+    row.event.actor,
+    row.event.action,
+    row.event.status,
+    row.event.message,
+    row.event.membership_proof,
+    row.event.consistency_proof
+  );
+});
+```
+
+## Contributing
 
 Currently, the setup scripts only have support for Mac/ZSH environments.
 Future support is incoming.
