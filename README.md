@@ -1,4 +1,4 @@
-<p align="center">
+<p align="center" style="padding-top: 20px;">
   <a href="https://pangea.cloud?utm_source=github&utm_medium=node-sdk" target="_blank" rel="noopener noreferrer">
     <img src="https://pangea-marketing.s3.us-west-2.amazonaws.com/pangea-color.png" alt="Pangea Logo" height="24">
   </a>
