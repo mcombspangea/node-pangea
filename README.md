@@ -26,7 +26,7 @@ import AuditService from "node-pangea/services/audit";
 
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.AUDIT_CONFIG_ID;
-const config = new PangeaConfig({  configId });
+const config = new PangeaConfig({ configId });
 const audit = new AuditService(token, config);
 
 // log an audit event
