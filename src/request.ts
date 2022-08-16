@@ -1,5 +1,5 @@
-import got, { Response, OptionsInit } from "got";
-import type { Headers } from "got";
+import got, { Options } from "got";
+import type { Response, Headers } from "got/dist/source";
 import pkg from "../package.json";
 import PangeaConfig from "./config";
 import { ResponseObject } from "./types";
@@ -26,16 +26,16 @@ class PangeaRequest {
   }
 
   async post(endpoint: string, data: object): Promise<Response> {
-    const url = this.getUrl(endpoint);
-    const options: OptionsInit = {
+    const options: Options = {
+      url: this.getUrl(endpoint),
       headers: this.getHeaders(),
       json: data,
-      retry: { limit: this.config.requestRetries },
+      retry: this.config.requestRetries,
       responseType: "json",
     };
 
     try {
-      const apiCall = (await got.post(url, options)) as Response;
+      const apiCall = (await got.post(options)) as Response;
 
       if (apiCall.statusCode === 202 && this.config.queuedRetryEnabled) {
         const body = apiCall.body as ResponseObject<any>;
@@ -51,16 +51,16 @@ class PangeaRequest {
 
   async get(endpoint: string, path: string): Promise<Response> {
     const fullPath = !path ? endpoint : `${endpoint}/${path}`;
-    const url = this.getUrl(fullPath);
 
-    const options: OptionsInit = {
+    const options: Options = {
+      url: this.getUrl(fullPath),
       headers: this.getHeaders(),
-      retry: { limit: this.config.requestRetries },
+      retry: this.config.requestRetries,
       responseType: "json",
     };
 
     try {
-      return (await got.get(url, options)) as Response;
+      return (await got.get(options)) as Response;
     } catch (error) {
       return error.response;
     }
@@ -99,7 +99,7 @@ class PangeaRequest {
   }
 
   getHeaders(): Headers {
-    const headers: Headers = {
+    const headers = {
       "Content-Type": "application/json",
       "User-Agent": `Pangea Node ${pkg.version}`,
       Authorization: `Bearer ${this.token}`,
