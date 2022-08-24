@@ -1,14 +1,11 @@
 {
   "env": {
-    "node": true,
-    //"commonjs": true,
-    "es2020": true
+    "node": true
   },
   "extends": ["prettier", "@gitlab"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": "latest",
-    "requireConfigFile": false
+    "sourceType": "module"
   },
   "rules": {
     "semi": ["error", "always"],
