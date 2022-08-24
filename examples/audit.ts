@@ -3,9 +3,10 @@
 import PangeaConfig from "../src/config";
 import AuditService from "../src/services/audit";
 
+const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.AUDIT_CONFIG_ID;
-const config = new PangeaConfig({ baseDomain: "dev.pangea.cloud", configId });
+const config = new PangeaConfig({ domain, configId });
 const audit = new AuditService(token, config);
 
 (async () => {
