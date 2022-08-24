@@ -1,5 +1,5 @@
 {
-  "compilerOptions": {    
+  "compilerOptions": {
     "target": "es2020", // Node.js 14
     "module": "ESNext",
     "moduleResolution": "node",
@@ -15,8 +15,7 @@
     "skipLibCheck": true
   },
 
-  "include": ["./src/*", "./tests/*"],
-  
+  "include": ["./src/*", "./tests/*"]
 }
 /*
   "ts-node": {

@@ -12,7 +12,7 @@ class PangeaConfig {
 
   constructor(options?: ConfigOptions) {
     Object.keys(options).forEach((name) => {
-      console.log('SET', name, options[name]);
+      console.log("SET", name, options[name]);
       this[name] = options[name];
     });
   }

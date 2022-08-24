@@ -39,6 +39,6 @@
     "build": "tsc"
   },
   "files": [
-		"dist/src"
-	]
+    "dist/src"
+  ]
 }
