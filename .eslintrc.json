@@ -1,38 +1,17 @@
 {
   "env": {
-    "node": true
+    "node": true,
+    //"commonjs": true,
+    "es2020": true
   },
-  "extends": [
-    "prettier",
-    "@gitlab"
-  ],
+  "extends": ["prettier", "@gitlab"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "ecmaVersion": 6,
-    "sourceType": "module",
+    "ecmaVersion": "latest",
     "requireConfigFile": false
   },
-  "ignorePatterns": [
-    "/coverage/**",
-    "/dev/**"
-  ],
   "rules": {
-    "semi": [
-      "error",
-      "always"
-    ],
-    "quotes": [
-      "error",
-      "double"
-    ],
-    "node/no-unsupported-features/es-syntax": [
-      "error",
-      {
-        "ignores": [
-          "dynamicImport",
-          "modules"
-        ]
-      }
-    ]
+    "semi": ["error", "always"],
+    "quotes": ["error", "double"]
   }
 }

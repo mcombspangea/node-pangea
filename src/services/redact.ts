@@ -1,7 +1,7 @@
-import PangeaResponse from "../response.js";
-import BaseService from "./base.js";
-import PangeaConfig from "../config.js";
-import { Redact } from "../types.js";
+import PangeaResponse from "../response";
+import BaseService from "./base";
+import PangeaConfig from "../config";
+import { Redact } from "../types";
 
 /**
  * RedactService class provides methods for interacting with the Redact Service

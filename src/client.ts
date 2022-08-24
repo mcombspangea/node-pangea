@@ -1,7 +1,7 @@
-import PangeaConfig from "./config.js";
-import AuditService from "./services/audit.js";
-import EmbargoService from "./services/embargo.js";
-import RedactService from "./services/redact.js";
+import PangeaConfig from "./config";
+import AuditService from "./services/audit";
+import EmbargoService from "./services/embargo";
+import RedactService from "./services/redact";
 
 class PangeaClient {
   token: string;

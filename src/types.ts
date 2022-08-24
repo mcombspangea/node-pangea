@@ -2,7 +2,7 @@
  * PangeaConfig options
  */
 export interface ConfigOptions {
-  domain?: string;
+  baseDomain?: string;
   environment?: string;
   configId?: string;
   requestRetries?: number;
