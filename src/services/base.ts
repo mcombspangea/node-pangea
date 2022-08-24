@@ -1,6 +1,6 @@
-import PangeaConfig from "../config.js";
-import PangeaRequest from "../request.js";
-import PangeaResponse from "../response.js";
+import PangeaConfig from "../config";
+import PangeaRequest from "../request";
+import PangeaResponse from "../response";
 
 class BaseService {
   configIdHeaderName: string;

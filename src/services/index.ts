@@ -1,11 +1,4 @@
-import AuditService from "./audit.js";
-import EmbargoService from "./embargo.js";
-import BaseService from "./base.js";
-import RedactService from "./redact.js";
-
-export default {
-  AuditService,
-  EmbargoService,
-  BaseService,
-  RedactService,
-};
+export * from "./audit";
+export * from "./base";
+export * from "./embargo";
+export * from "./redact";

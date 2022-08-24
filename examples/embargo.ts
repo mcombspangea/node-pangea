@@ -3,10 +3,9 @@
 import PangeaConfig from "../src/config";
 import EmbargoService from "../src/services/embargo";
 
-const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.EMBARGO_CONFIG_ID;
-const config = new PangeaConfig({ domain, configId });
+const config = new PangeaConfig({ baseDomain: "dev.pangea.cloud", configId });
 const embargo = new EmbargoService(token, config);
 
 (async () => {

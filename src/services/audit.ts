@@ -1,9 +1,9 @@
-import PangeaResponse from "../response.js";
-import BaseService from "./base.js";
-import PangeaConfig from "../config.js";
-import { Audit } from "../types.js";
-import { PublishedRoots, getArweavePublishedRoots } from "../utils/arweave.js";
-import { verifyConsistencyProof, verifyMembershipProof } from "../utils/verification.js";
+import PangeaResponse from "../response";
+import BaseService from "./base";
+import PangeaConfig from "../config";
+import { Audit } from "../types";
+import { PublishedRoots, getArweavePublishedRoots } from "../utils/arweave";
+import { verifyConsistencyProof, verifyMembershipProof } from "../utils/verification";
 
 const SupportedFields = ["actor", "action", "status", "source", "target"];
 

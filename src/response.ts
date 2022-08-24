@@ -1,32 +1,29 @@
-import type { Response } from "got/dist/source/index.js";
-import { HTTPError, RequestError } from "got";
+import type { Response } from "got/dist/source";
+import { HTTPError } from "got/dist/source";
 import type { ResponseObject } from "./types";
 
 class PangeaResponse<M> {
-  gotResponse: Response | undefined;
+  gotResponse: Response;
   success: boolean;
   data: ResponseObject<M> | undefined;
   status: string;
   code: number;
 
-  constructor(response: Response | HTTPError | RequestError) {
-    this.status = "";
-    this.code = 0;
-    this.success = false;
-
+  constructor(response: Response | HTTPError) {
     if (response instanceof HTTPError) {
       this.gotResponse = response.response;
       this.success = false;
-    } else if (response) {
-      const { statusCode } = response as Response;
-      this.gotResponse = response as Response;
+    } else {
+      const { statusCode } = response;
+      this.gotResponse = response;
       this.success = (statusCode >= 200 && statusCode <= 299) || statusCode === 304;
-      this.status = this.gotResponse.statusMessage || "";
-      this.code = this.gotResponse.statusCode || 0;
+    }
 
-      if (this.gotResponse.body instanceof Object) {
-        this.data = this.gotResponse.body as ResponseObject<any>;
-      }
+    this.status = this.gotResponse.statusMessage || "";
+    this.code = this.gotResponse.statusCode || 0;
+
+    if (this.gotResponse.body instanceof Object) {
+      this.data = this.gotResponse.body as ResponseObject<any>;
     }
   }
 

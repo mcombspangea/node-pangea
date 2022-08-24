@@ -4,7 +4,7 @@ import RedactService from "../../src/services/redact";
 const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || "";
 const configId = process.env.REDACT_INTEGRATION_CONFIG_TOKEN || "";
 const testHost = process.env.PANGEA_TEST_INTEGRATION_ENDPOINT || "";
-const config = new PangeaConfig({ domain: testHost, configId });
+const config = new PangeaConfig({ baseDomain: testHost, configId });
 const redact = new RedactService(token, config);
 
 it("redact a data string", async () => {

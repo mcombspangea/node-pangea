@@ -3,10 +3,9 @@
 import PangeaConfig from "../src/config";
 import RedactService from "../src/services/redact";
 
-const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.REDACT_CONFIG_ID;
-const config = new PangeaConfig({ domain, configId });
+const config = new PangeaConfig({ baseDomain: "dev.pangea.cloud", configId });
 const redact = new RedactService(token, config);
 
 (async () => {

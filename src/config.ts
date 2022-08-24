@@ -1,7 +1,7 @@
-import type { ConfigOptions } from "./types.js";
+import type { ConfigOptions } from "./types";
 
 class PangeaConfig {
-  domain: string = "pangea.cloud";
+  baseDomain: string = "pangea.cloud";
   environment: string = "production";
   configId: string;
   requestRetries: number = 3;
