@@ -40,5 +40,5 @@ publish:
   only:
     - tags
   script:
-    - yarn install
+    - yarn build
     - cat ${NPMRC} > .npmrc && npm publish && rm -rf .npmrc
