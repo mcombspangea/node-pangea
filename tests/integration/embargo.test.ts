@@ -4,7 +4,7 @@ import EmbargoService from "../../src/services/embargo";
 const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || "";
 const configId = process.env.EMBARGO_INTEGRATION_CONFIG_TOKEN || "";
 const testHost = process.env.PANGEA_TEST_INTEGRATION_ENDPOINT || "";
-const config = new PangeaConfig({ baseDomain: testHost, configId });
+const config = new PangeaConfig({ domain: testHost, configId });
 const embargo = new EmbargoService(token, config);
 
 it("check IP in Russia", async () => {

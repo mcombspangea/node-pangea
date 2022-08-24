@@ -15,19 +15,19 @@ const REDACTCONFIG_ID = process.env.REDACT_CONFIG_ID;
 const PANGEACSP = process.env.PANGEA_CSP;
 
 const embargoConfig = new PangeaConfig({
-  baseDomain: `${PANGEACSP}.pangea.cloud`,
+  domain: `${PANGEACSP}.pangea.cloud`,
   configId: EMBARGOCONFIG_ID,
 });
 const embargo = new EmbargoService(TOKEN, embargoConfig);
 
 const auditConfig = new PangeaConfig({
-  baseDomain: `${PANGEACSP}.pangea.cloud`,
+  domain: `${PANGEACSP}.pangea.cloud`,
   configId: AUDITCONFIG_ID,
 });
 const audit = new AuditService(TOKEN, auditConfig);
 
 const redactConfig = new PangeaConfig({
-  baseDomain: `${PANGEACSP}.pangea.cloud`,
+  domain: `${PANGEACSP}.pangea.cloud`,
   configId: REDACTCONFIG_ID,
 });
 const redact = new RedactService(TOKEN, redactConfig);
