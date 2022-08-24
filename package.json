@@ -1,6 +1,6 @@
 {
   "name": "node-pangea",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "main": "./dist/src/index.js",
   "typings": "./dist/src/index.d.ts",
   "type": "module",
