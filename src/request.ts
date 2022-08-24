@@ -1,6 +1,5 @@
-import got, { Options } from "got";
+import got, { Options, RequestError } from "got";
 import type { Response, Headers } from "got/dist/source";
-import pkg from "../package.json";
 import PangeaConfig from "./config";
 import { ResponseObject } from "./types";
 
@@ -45,7 +44,7 @@ class PangeaRequest {
       }
       return apiCall;
     } catch (error) {
-      return error.response;
+      return error;
     }
   }
 
@@ -62,7 +61,7 @@ class PangeaRequest {
     try {
       return (await got.get(options)) as Response;
     } catch (error) {
-      return error.response;
+      return error;
     }
   }
 
@@ -93,7 +92,7 @@ class PangeaRequest {
 
   getUrl(path: string): string {
     const versionPath = this.config.apiVersion ? `/${this.config.apiVersion}` : "";
-    const url = `https://${this.serviceName}.${this.config.baseDomain}${versionPath}/${path}`;
+    const url = `https://${this.serviceName}.${this.config.domain}${versionPath}/${path}`;
 
     return url;
   }
@@ -101,7 +100,7 @@ class PangeaRequest {
   getHeaders(): Headers {
     const headers = {
       "Content-Type": "application/json",
-      "User-Agent": `Pangea Node ${pkg.version}`,
+      "User-Agent": "Pangea Node", // '`Pangea Node ${pkg.version}`,
       Authorization: `Bearer ${this.token}`,
     };
 

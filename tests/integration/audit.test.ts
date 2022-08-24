@@ -4,7 +4,7 @@ import AuditService from "../../src/services/audit";
 const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || "";
 const configId = process.env.AUDIT_INTEGRATION_CONFIG_TOKEN || "";
 const testHost = process.env.PANGEA_TEST_INTEGRATION_ENDPOINT || "";
-const config = new PangeaConfig({ baseDomain: testHost, configId });
+const config = new PangeaConfig({ domain: testHost, configId });
 const audit = new AuditService(token, config);
 
 it("log an audit event", async () => {

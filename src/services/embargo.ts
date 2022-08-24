@@ -1,7 +1,7 @@
-import PangeaResponse from "../response";
-import BaseService from "./base";
-import PangeaConfig from "../config";
-import { Embargo } from "../types";
+import PangeaResponse from "../response.js";
+import BaseService from "./base.js";
+import PangeaConfig from "../config.js";
+import { Embargo } from "../types.js";
 
 /**
  * EmbargoService class provides methods for interacting with the Embargo Service
