@@ -15,12 +15,11 @@
   "devDependencies": {
     "@babel/core": "^7.18.13",
     "@babel/eslint-parser": "^7.18.9",
-    "@babel/plugin-syntax-top-level-await": "^7.14.5",
     "@gitlab/eslint-config": "^4.0.0",
     "@types/crypto-js": "^4.1.1",
     "@types/jest": "^28.1.6",
     "babel-eslint": "^10.1.0",
-    "eslint": "^8.11.0",
+    "eslint": "^8.22.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.3",
