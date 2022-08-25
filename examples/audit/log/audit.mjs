@@ -11,7 +11,7 @@ const audit = new AuditService(token, config);
    message: "Hello, World!",
  };
 
-  console.log("Logging message: ", data);
+  console.log("Logging message: ", data.message);
   const logResponse = await audit.log(data);
 
   if (logResponse.success) {
