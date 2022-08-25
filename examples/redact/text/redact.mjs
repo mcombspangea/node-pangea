@@ -5,7 +5,7 @@ import { PangeaConfig, RedactService } from "node-pangea";
 
 const token = process.env.REDACT_AUTH_TOKEN;
 const configId = process.env.REDACT_CONFIG_ID;
-const config = new PangeaConfig({ baseDomain: process.env.PANGEA_DOMAIN, configId });
+const config = new PangeaConfig({ domain: process.env.PANGEA_DOMAIN, configId });
 const redact = new RedactService(token, config);
 
 (async () => {
