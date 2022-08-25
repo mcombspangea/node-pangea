@@ -10,7 +10,7 @@ const redact = new RedactService(token, config);
 
 (async () => {
   const text = 'Hello, my phone number is 123-456-7890';
-  console.log("Logging message: ''%s'", text);
+  console.log("Redacting PII from: '%s'", text);
   const response = await redact.redact(text);
 
   if (response.success) {

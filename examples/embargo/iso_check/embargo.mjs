@@ -8,7 +8,11 @@ const config = new PangeaConfig({ baseDomain: process.env.PANGEA_DOMAIN, configI
 const embargo = new EmbargoService(token, config);
 
 (async () => {
-  const response = await embargo.isoCheck("CU");
+
+  const iso_country_code = 'CU';
+  console.log("Checking Embargo ISO code: '%s'", iso_country_code);
+
+  const response = await embargo.isoCheck(iso_country_code);
 
   if (response.success) {
     console.log("Success:", response.result);
