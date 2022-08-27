@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import PangeaConfig from "../src/config";
-import RedactService from "../src/services/redact";
+import PangeaConfig from "../src/config.js";
+import RedactService from "../src/services/redact.js";
 
 const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
