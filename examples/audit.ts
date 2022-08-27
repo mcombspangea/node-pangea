@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import PangeaConfig from "../src/config";
-import AuditService from "../src/services/audit";
+import PangeaConfig from "../src/config.js";
+import AuditService from "../src/services/audit.js";
 
 const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
@@ -18,7 +18,7 @@ const audit = new AuditService(token, config);
   };
 
   console.log("Logging audit data...");
-  const logResponse = await audit.log(data);
+  const logResponse = await audit.log(data, { verbose: true });
 
   if (logResponse.success) {
     console.log("Success:", logResponse.result);
