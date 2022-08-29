@@ -3,7 +3,7 @@ import { default as _PangeaClient } from "./client";
 import { default as _PangeaRequest } from "./request";
 import { default as _PangeaResponse } from "./response";
 
-import services from "./services/index.js";
+import services from "./services/index";
 
 // Export all types
 export * from "./types.js";

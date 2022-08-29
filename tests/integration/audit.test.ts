@@ -1,5 +1,6 @@
 import PangeaConfig from "../../src/config";
 import AuditService from "../../src/services/audit";
+import { Audit } from "../../src/types";
 
 const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || "";
 const configId = process.env.AUDIT_INTEGRATION_CONFIG_TOKEN || "";
@@ -8,7 +9,7 @@ const config = new PangeaConfig({ domain: testHost, configId });
 const audit = new AuditService(token, config);
 
 it("log an audit event", async () => {
-  const event = {
+  const event: Audit.Event = {
     actor: "node-sdk-tester",
     message: "this is a test",
   };
@@ -21,7 +22,7 @@ it("log an audit event", async () => {
 
 it("search audit log", async () => {
   const query = "message:test";
-  const options = {
+  const options: Audit.SearchOptions = {
     limit: 10,
   };
 

@@ -9,45 +9,6 @@ const SupportedFields = ["actor", "action", "status", "source", "target"];
 
 const SupportedJSONFields = ["message", "new", "old"];
 
-interface RootParams {
-  tree_size?: number;
-}
-
-interface SearchRestriction {
-  actor?: Array<string>;
-  action?: Array<string>;
-  signature?: Array<string>;
-  source?: Array<string>;
-  status?: Array<string>;
-  target?: Array<string>;
-}
-
-interface SearchOptions {
-  limit: number;
-  start?: string;
-  end?: string;
-  order: string;
-  order_by: string;
-  include_membership_proof?: boolean;
-  include_hash?: boolean;
-  include_root?: boolean;
-  restriction?: SearchRestriction;
-  verify?: boolean;
-}
-
-interface SearchParams {
-  query: string;
-  limit?: number;
-  start?: string;
-  end?: string;
-  order?: string;
-  order_by?: string;
-  include_membership_proof?: boolean;
-  include_hash?: boolean;
-  include_root?: boolean;
-  search_restriction?: SearchRestriction;
-}
-
 /**
  * AuditService class provides methods for interacting with the Audit Service
  * @extends BaseService
@@ -93,7 +54,10 @@ class AuditService extends BaseService {
    *
    *  const logResponse = await audit.log(auditData);
    */
-  log(content: Audit.Event, options: Audit.LogOptions): Promise<PangeaResponse<Audit.LogResponse>> {
+  log(
+    content: Audit.Event,
+    options: Audit.LogOptions = {}
+  ): Promise<PangeaResponse<Audit.LogResponse>> {
     const event: Audit.Event = {
       message: "",
     };
@@ -144,20 +108,18 @@ class AuditService extends BaseService {
    */
   async search(
     query: string,
-    options: SearchOptions
+    options: Audit.SearchOptions
   ): Promise<PangeaResponse<Audit.SearchResponse>> {
-    const defaults: SearchOptions = {
+    const defaults: Audit.SearchOptions = {
       limit: 20,
-      start: "",
-      end: "",
       order: "desc",
       order_by: "received_at",
-      include_membership_proof: true,
-      include_hash: true,
-      include_root: true,
+      include_membership_proof: false,
+      include_hash: false,
+      include_root: false,
     };
 
-    const payload: SearchParams = { query };
+    const payload: Audit.SearchParams = { query };
     Object.assign(payload, defaults);
 
     if (options?.limit) {
@@ -244,7 +206,7 @@ class AuditService extends BaseService {
    * const response = audit.root(7);
    */
   root(size: number = 0): Promise<PangeaResponse<Audit.RootResponse>> {
-    const data: RootParams = {};
+    const data: Audit.RootParams = {};
 
     if (size > 0) {
       data.tree_size = size;

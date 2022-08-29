@@ -1,6 +1,6 @@
 {
   "name": "node-pangea",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
   "exports": {
@@ -39,8 +39,8 @@
   },
   "scripts": {
     "test": "echo 'Testing...'",
-    "test:unit": "echo 'Unit tests...'",
-    "test:integration": "echo 'Integration tests...'",
+    "test:unit": "NODE_OPTIONS=--experimental-vm-modules npx jest --testPathPattern=tests/unit",
+    "test:integration": "NODE_OPTIONS=--experimental-vm-modules npx jest --testPathPattern=tests/integration",
     "lint": "npx prettier --check . && npx eslint --ext .ts",
     "prettier:fix": "npx prettier . -w",
     "print:docs:json": "node ./dev/generate_docs.js",

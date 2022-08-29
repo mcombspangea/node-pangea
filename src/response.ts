@@ -14,9 +14,11 @@ class PangeaResponse<M> {
     this.code = 0;
     this.success = false;
 
-    if (response instanceof HTTPError) {
-      this.gotResponse = response.response;
+    if (response instanceof RequestError) {
+      this.gotResponse = response.response as Response;
       this.success = false;
+      this.status = this.gotResponse.statusMessage || "";
+      this.code = this.gotResponse.statusCode || 0;
     } else if (response) {
       const { statusCode } = response as Response;
       this.gotResponse = response as Response;

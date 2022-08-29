@@ -2,6 +2,8 @@
 
 import PangeaConfig from "../src/config";
 import AuditService from "../src/services/audit";
+import PangeaResponse from "../src/response";
+import { Audit } from "../src/types";
 
 const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
@@ -27,7 +29,7 @@ const audit = new AuditService(token, config);
   }
 
   console.log("Searching audit data...");
-  const searchResponse = await audit.search("message:test", {
+  const searchResponse: PangeaResponse<Audit.SearchResponse> = await audit.search("message:test", {
     restriction: { source: ["monitor"] },
     limit: 10,
     verify: true,

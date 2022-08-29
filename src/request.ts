@@ -1,6 +1,6 @@
 import got, { Options, RequestError } from "got";
 import type { Response, Headers } from "got/dist/source";
-import PangeaConfig from "./config";
+import PangeaConfig, { version } from "./config";
 import { ResponseObject } from "./types";
 
 const delay = async (ms: number) =>
@@ -102,7 +102,7 @@ class PangeaRequest {
   getHeaders(): Headers {
     const headers = {
       "Content-Type": "application/json",
-      "User-Agent": "Pangea Node", // '`Pangea Node ${pkg.version}`,
+      "User-Agent": `Pangea Node ${version}`,
       Authorization: `Bearer ${this.token}`,
     };
 

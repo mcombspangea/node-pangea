@@ -74,12 +74,51 @@ export namespace Audit {
     canonical_event_base64?: string;
   }
 
+  export interface SearchOptions {
+    limit?: number;
+    start?: string;
+    end?: string;
+    order?: string;
+    order_by?: string;
+    include_membership_proof?: boolean;
+    include_hash?: boolean;
+    include_root?: boolean;
+    restriction?: Audit.SearchRestriction;
+    verify?: boolean;
+  }
+
   export interface SearchResponse {
     id?: string;
     count: number;
-    events: AuditRecord[];
+    events: Audit.AuditRecord[];
     expires_at?: string;
     root: Root;
+  }
+
+  export interface SearchRestriction {
+    actor?: Array<string>;
+    action?: Array<string>;
+    signature?: Array<string>;
+    source?: Array<string>;
+    status?: Array<string>;
+    target?: Array<string>;
+  }
+
+  export interface SearchParams {
+    query: string;
+    limit?: number;
+    start?: string;
+    end?: string;
+    order?: string;
+    order_by?: string;
+    include_membership_proof?: boolean;
+    include_hash?: boolean;
+    include_root?: boolean;
+    search_restriction?: Audit.SearchRestriction;
+  }
+
+  export interface RootParams {
+    tree_size?: number;
   }
 
   export interface ResultResponse {
