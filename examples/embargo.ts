@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import PangeaConfig from "../src/config.js";
-import EmbargoService from "../src/services/embargo.js";
+import PangeaConfig from "../src/config";
+import EmbargoService from "../src/services/embargo";
 
 const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;

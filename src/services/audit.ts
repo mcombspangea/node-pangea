@@ -1,9 +1,9 @@
-import PangeaResponse from "../response.js";
-import BaseService from "./base.js";
-import PangeaConfig from "../config.js";
-import { Audit } from "../types.js";
-import { PublishedRoots, getArweavePublishedRoots } from "../utils/arweave.js";
-import { verifyConsistencyProof, verifyMembershipProof } from "../utils/verification.js";
+import PangeaResponse from "../response";
+import BaseService from "./base";
+import PangeaConfig from "../config";
+import { Audit } from "../types";
+import { PublishedRoots, getArweavePublishedRoots } from "../utils/arweave";
+import { verifyConsistencyProof, verifyMembershipProof } from "../utils/verification";
 
 const SupportedFields = ["actor", "action", "status", "source", "target"];
 
@@ -54,17 +54,24 @@ class AuditService extends BaseService {
    *
    *  const logResponse = await audit.log(auditData);
    */
-  log(content: Audit.Event, options: Audit.LogOptions): Promise<PangeaResponse<Audit.LogResponse>> {
-    const event = {};
+  log(
+    content: Audit.Event,
+    options: Audit.LogOptions = {}
+  ): Promise<PangeaResponse<Audit.LogResponse>> {
+    const event: Audit.Event = {
+      message: "",
+    };
 
     SupportedFields.forEach((key) => {
       if (key in content) {
+        // @ts-ignore
         event[key] = content[key];
       }
     });
 
     SupportedJSONFields.forEach((key) => {
       if (key in content) {
+        // @ts-ignore
         event[key] = JSON.stringify(content[key]);
       }
     });
@@ -72,7 +79,7 @@ class AuditService extends BaseService {
     const data: Audit.LogData = { event: event };
 
     if (options?.verbose) {
-      data.verbose = options.verbose
+      data.verbose = options.verbose;
     }
 
     return this.post("log", data);
@@ -99,35 +106,64 @@ class AuditService extends BaseService {
    * @example
    * const response = await audit.search("add_employee:Gumby")
    */
-  async search(query: string, options = {}): Promise<PangeaResponse<Audit.SearchResponse>> {
-    const defaults = {
+  async search(
+    query: string,
+    options: Audit.SearchOptions
+  ): Promise<PangeaResponse<Audit.SearchResponse>> {
+    const defaults: Audit.SearchOptions = {
       limit: 20,
-      start: "",
-      end: "",
       order: "desc",
       order_by: "received_at",
-      include_membership_proof: true,
-      include_hash: true,
-      include_root: true,
+      include_membership_proof: false,
+      include_hash: false,
+      include_root: false,
     };
 
-    const payload = { query };
-    Object.keys(defaults).forEach((name) => {
-      if (name in options) {
-        payload[name] = options[name];
-      } else if (defaults[name] !== "") {
-        payload[name] = defaults[name];
-      }
-    });
+    const payload: Audit.SearchParams = { query };
+    Object.assign(payload, defaults);
+
+    if (options?.limit) {
+      payload.limit = options.limit;
+    }
+
+    if (options?.start) {
+      payload.start = options.start;
+    }
+
+    if (options?.end) {
+      payload.end = options.end;
+    }
+
+    if (options?.order) {
+      payload.order = options.order;
+    }
+
+    if (options?.order_by) {
+      payload.order_by = options.order_by;
+    }
 
     // pass restriction as search_restriction
-    if ("restriction" in options) {
-      payload["search_restriction"] = options["restriction"];
+    if (options.restriction) {
+      payload.search_restriction = options.restriction;
     }
 
     // Store the verify mode for the search, used by results
-    if ("verify" in options) {
-      this.verifyResponse = options["verify"];
+    // Include proofs, root and hash, if verify is set
+    if (options?.verify) {
+      this.verifyResponse = options.verify;
+      payload.include_membership_proof = true;
+      payload.include_hash = true;
+      payload.include_root = true;
+    } else {
+      if (options?.include_membership_proof) {
+        payload.include_membership_proof = true;
+      }
+      if (options?.include_hash) {
+        payload.include_hash = true;
+      }
+      if (options?.include_root) {
+        payload.include_root = true;
+      }
     }
 
     const response: PangeaResponse<Audit.SearchResponse> = await this.post("search", payload);
@@ -170,10 +206,10 @@ class AuditService extends BaseService {
    * const response = audit.root(7);
    */
   root(size: number = 0): Promise<PangeaResponse<Audit.RootResponse>> {
-    const data = {};
+    const data: Audit.RootParams = {};
 
     if (size > 0) {
-      data["tree_size"] = size;
+      data.tree_size = size;
     }
 
     return this.post("root", data);
@@ -199,13 +235,13 @@ class AuditService extends BaseService {
     }
 
     if (this.verifyResponse) {
-      if (!root?.tree_name) return;
+      if (!root?.tree_name) return response;
 
       const treeName = root?.tree_name;
       const treeSizes = new Set<number>();
       treeSizes.add(root?.size ?? 0);
 
-      response.result.events.forEach((log) => {
+      response.result.events.forEach((log: Audit.AuditRecord) => {
         if (log.leaf_index !== undefined) {
           const idx = Number(log.leaf_index);
           treeSizes.add(idx + 1);
@@ -221,7 +257,7 @@ class AuditService extends BaseService {
         localRoot
       );
 
-      response.result.events.forEach((record) => {
+      response.result.events.forEach((record: Audit.AuditRecord) => {
         if (record.leaf_index) {
           const consistency = verifyConsistencyProof({
             publishedRoots: this.publishedRoots,
