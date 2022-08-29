@@ -47,6 +47,6 @@
     "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup.sh"
   },
   "files": [
-    "dist/src"
+    "dist"
   ]
 }
