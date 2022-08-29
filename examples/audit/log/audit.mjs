@@ -6,10 +6,9 @@ const config = new PangeaConfig({ domain: process.env.PANGEA_DOMAIN, configId })
 const audit = new AuditService(token, config);
 
 (async () => {
-
   const data = {
-   message: "Hello, World!",
- };
+    message: "Hello, World!",
+  };
 
   console.log("Logging message: ", data.message);
   const logResponse = await audit.log(data);

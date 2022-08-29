@@ -31,9 +31,9 @@ export interface ResponseObject<M> {
 export namespace Audit {
   export interface LogOptions {
     verbose?: boolean;
-  } 
+  }
 
-  export interface LogData extends Audit.LogOptions{
+  export interface LogData extends Audit.LogOptions {
     event: Audit.Event;
   }
 

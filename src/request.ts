@@ -24,7 +24,7 @@ class PangeaRequest {
     this.extraHeaders = {};
   }
 
-  async post(endpoint: string, data: object): Promise<Response> {
+  async post(endpoint: string, data: object): Promise<Response<any> | RequestError> {
     const options: Options = {
       url: this.getUrl(endpoint),
       headers: this.getHeaders(),
@@ -39,16 +39,17 @@ class PangeaRequest {
       if (apiCall.statusCode === 202 && this.config.queuedRetryEnabled) {
         const body = apiCall.body as ResponseObject<any>;
         const request_id = body?.request_id;
-        const response = await this.handleAsync(request_id);
+        const response = (await this.handleAsync(request_id)) as Response;
         return response;
       }
       return apiCall;
     } catch (error) {
-      return error;
+      // throw new Error(error as string);
+      return error as RequestError;
     }
   }
 
-  async get(endpoint: string, path: string): Promise<Response> {
+  async get(endpoint: string, path: string): Promise<Response<any> | RequestError> {
     const fullPath = !path ? endpoint : `${endpoint}/${path}`;
 
     const options: Options = {
@@ -61,11 +62,12 @@ class PangeaRequest {
     try {
       return (await got.get(options)) as Response;
     } catch (error) {
-      return error;
+      // throw new Error(error as string);
+      return error as RequestError;
     }
   }
 
-  async handleAsync(requestId: string): Promise<Response> {
+  async handleAsync(requestId: string): Promise<Response<any> | undefined> {
     let retryCount = 0;
 
     while (retryCount < this.config.queuedRetries) {
@@ -86,7 +88,7 @@ class PangeaRequest {
     return;
   }
 
-  setExtraHeaders(headers) {
+  setExtraHeaders(headers: any): any {
     this.extraHeaders = { ...headers };
   }
 

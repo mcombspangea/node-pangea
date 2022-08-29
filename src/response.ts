@@ -1,4 +1,4 @@
-import type { Response } from "got/dist/source/index.js";
+import type { Response } from "got/dist/source/index";
 import { HTTPError, RequestError } from "got";
 import type { ResponseObject } from "./types";
 
@@ -21,6 +21,7 @@ class PangeaResponse<M> {
       const { statusCode } = response as Response;
       this.gotResponse = response as Response;
       this.success = (statusCode >= 200 && statusCode <= 299) || statusCode === 304;
+
       this.status = this.gotResponse.statusMessage || "";
       this.code = this.gotResponse.statusCode || 0;
 
@@ -30,12 +31,12 @@ class PangeaResponse<M> {
     }
   }
 
-  get result(): M {
-    return this.data?.result;
+  get result(): any {
+    return this.data?.result || {};
   }
 
   get requestId(): string {
-    return this.data?.request_id;
+    return this.data?.request_id || "";
   }
 }
 

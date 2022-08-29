@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
-import PangeaConfig from "../src/config.js";
-import AuditService from "../src/services/audit.js";
+import PangeaConfig from "../src/config";
+import AuditService from "../src/services/audit";
 
 const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;

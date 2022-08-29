@@ -3,7 +3,7 @@ import type { ConfigOptions } from "./types.js";
 class PangeaConfig {
   domain: string = "pangea.cloud";
   environment: string = "production";
-  configId: string;
+  configId: string = "";
   requestRetries: number = 3;
   requestTimeout: number = 5000;
   queuedRetryEnabled: boolean = true;
@@ -11,9 +11,7 @@ class PangeaConfig {
   apiVersion: string = "v1";
 
   constructor(options?: ConfigOptions) {
-    Object.keys(options).forEach((name) => {
-      this[name] = options[name];
-    });
+    Object.assign(this, options);
   }
 }
 
