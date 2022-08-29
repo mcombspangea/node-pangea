@@ -29,6 +29,14 @@ export interface ResponseObject<M> {
  * Secure Audit interface definitions
  */
 export namespace Audit {
+  export interface LogOptions {
+    verbose?: boolean;
+  } 
+
+  export interface LogData extends Audit.LogOptions{
+    event: Audit.Event;
+  }
+
   export interface Event {
     message: string;
     actor?: string;
@@ -62,6 +70,8 @@ export namespace Audit {
 
   export interface LogResponse {
     hash: string;
+    event?: Audit.Event;
+    canonical_event_base64?: string;
   }
 
   export interface SearchResponse {

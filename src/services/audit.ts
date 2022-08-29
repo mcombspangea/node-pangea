@@ -9,6 +9,7 @@ const SupportedFields = ["actor", "action", "status", "source", "target"];
 
 const SupportedJSONFields = ["message", "new", "old"];
 
+
 /**
  * AuditService class provides methods for interacting with the Audit Service
  * @extends BaseService
