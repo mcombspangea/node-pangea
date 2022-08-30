@@ -3,10 +3,10 @@
 
 import got, { Options } from "got";
 import type { Response } from "got/dist/source";
-import { Audit } from "../types";
+
+import { Audit } from "../types.js";
 
 const ARWEAVE_BASE_URL = "https://arweave.net";
-
 const ARWEAVE_GRAPHQL_URL = `${ARWEAVE_BASE_URL}/graphql`;
 
 const arweaveTransactionUrl = (transactionId: string): string => {

@@ -1,6 +1,7 @@
 import type { Response } from "got/dist/source/index";
 import { HTTPError, RequestError } from "got";
-import type { ResponseObject } from "./types";
+
+import type { ResponseObject } from "./types.js";
 
 class PangeaResponse<M> {
   gotResponse: Response | undefined;

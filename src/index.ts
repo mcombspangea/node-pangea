@@ -1,9 +1,9 @@
-import { default as _PangeaConfig } from "./config";
-import { default as _PangeaClient } from "./client";
-import { default as _PangeaRequest } from "./request";
-import { default as _PangeaResponse } from "./response";
+import { default as _PangeaConfig } from "./config.js";
+import { default as _PangeaClient } from "./client.js";
+import { default as _PangeaRequest } from "./request.js";
+import { default as _PangeaResponse } from "./response.js";
 
-import services from "./services/index";
+import services from "./services/index.js";
 
 // Export all types
 export * from "./types.js";

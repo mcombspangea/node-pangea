@@ -1,6 +1,6 @@
 import type { ConfigOptions } from "./types.js";
 
-export const version = "0.3.0";
+export const version = "0.3.1";
 
 class PangeaConfig {
   domain: string = "pangea.cloud";
