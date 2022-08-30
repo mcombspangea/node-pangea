@@ -1,14 +1,20 @@
 <p align="center">
   <br />
   <a href="https://pangea.cloud?utm_source=github&utm_medium=node-sdk" target="_blank" rel="noopener noreferrer">
-    <img src="https://pangea-marketing.s3.us-west-2.amazonaws.com/pangea-color.png" alt="Pangea Logo" height="24">
+    <img src="https://pangea-marketing.s3.us-west-2.amazonaws.com/pangea-color.svg" alt="Pangea Logo" height="40">
   </a>
   <br />
+
+  [![documentation](https://img.shields.io/badge/documentation-pangea-blue)](https://pangea.cloud/docs/sdk/js/)
+  [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://pangea-builders.slack.com/ssb/redirect)
+  ![GitLab CI](https://img.shields.io/badge/gitlab%20ci-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
 </p>
 
 # Pangea Node SDK
 
 A javascript SDK for using Pangea APIs in a Node application.
+
+This package is provided with support for ESM and CommonJS.
 
 ## Installation
 
@@ -21,12 +27,12 @@ npm install node-pangea
 ## Usage
 
 ```js
-import PangeaConfig from "node-pangea/config";
-import AuditService from "node-pangea/services/audit";
+import { PangeaConfig, AuditService } from "node-pangea";
 
+const domain = process.env.PANGEA_DOMAIN
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.AUDIT_CONFIG_ID;
-const config = new PangeaConfig({ configId });
+const config = new PangeaConfig({ domain: domain, configId: configId });
 const audit = new AuditService(token, config);
 
 // log an audit event
