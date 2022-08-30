@@ -8,8 +8,10 @@
 
 <p>
 <br />
+
 [![documentation](https://img.shields.io/badge/documentation-pangea-blue?style=for-the-badge&labelColor=551B76)](https://pangea.cloud/docs/sdk/js/)
 [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://pangea-builders.slack.com/ssb/redirect)
+
 <br />
 </p>
 
