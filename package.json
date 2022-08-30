@@ -1,6 +1,6 @@
 {
   "name": "node-pangea",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "main": "dist/cjs/index.js",
   "module": "dist/mjs/index.js",
   "exports": {
@@ -47,6 +47,6 @@
     "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json && ./fixup.sh"
   },
   "files": [
-    "dist/src"
+    "dist"
   ]
 }

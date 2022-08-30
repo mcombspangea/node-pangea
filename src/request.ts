@@ -1,7 +1,8 @@
 import got, { Options, RequestError } from "got";
 import type { Response, Headers } from "got/dist/source";
-import PangeaConfig, { version } from "./config";
-import { ResponseObject } from "./types";
+
+import PangeaConfig, { version } from "./config.js";
+import { ResponseObject } from "./types.js";
 
 const delay = async (ms: number) =>
   new Promise((resolve) => {

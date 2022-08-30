@@ -1,10 +1,11 @@
 // Copyright 2021 Pangea Cyber Corporation
 // Author: Pangea Cyber Corporation
 
-import { Audit } from "../types";
 import CryptoJS from "crypto-js";
 import MerkleTools from "merkle-tools";
-import { PublishedRoots } from "./arweave";
+
+import { Audit } from "../types.js";
+import { PublishedRoots } from "./arweave.js";
 
 // @ts-ignore
 const merkleTools = new MerkleTools();
