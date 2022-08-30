@@ -5,9 +5,9 @@
   </a>
   <br />
 
-  [![documentation](https://img.shields.io/badge/documentation-pangea-blue)](https://pangea.cloud/docs/sdk/js/)
-  [![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://pangea-builders.slack.com/ssb/redirect)
-  ![GitLab CI](https://img.shields.io/badge/gitlab%20ci-%23181717.svg?style=for-the-badge&logo=gitlab&logoColor=white)
+[![documentation](https://img.shields.io/badge/documentation-pangea-blue?style=for-the-badge&labelColor=551B76)](https://pangea.cloud/docs/sdk/js/)
+[![Slack](https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white)](https://pangea-builders.slack.com/ssb/redirect)
+
 </p>
 
 # Pangea Node SDK
@@ -29,7 +29,7 @@ npm install node-pangea
 ```js
 import { PangeaConfig, AuditService } from "node-pangea";
 
-const domain = process.env.PANGEA_DOMAIN
+const domain = process.env.PANGEA_DOMAIN;
 const token = process.env.PANGEA_TOKEN;
 const configId = process.env.AUDIT_CONFIG_ID;
 const config = new PangeaConfig({ domain: domain, configId: configId });
