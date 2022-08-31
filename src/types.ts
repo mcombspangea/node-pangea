@@ -163,7 +163,7 @@ export namespace Embargo {
 /**
  * Intel services interface definitions
  */
- export namespace Intel {
+export namespace Intel {
   export interface Options {
     verbose?: boolean;
     raw?: boolean;

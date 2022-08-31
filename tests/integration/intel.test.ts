@@ -1,9 +1,9 @@
 import PangeaConfig from "../../src/config";
-import { 
+import {
   FileIntelService,
   URLIntelService,
   IPIntelService,
-  DomainIntelService
+  DomainIntelService,
 } from "../../src/services/intel";
 
 const token = process.env.PANGEA_TEST_INTEGRATION_TOKEN || "";
@@ -15,8 +15,12 @@ const ipIntel = new IPIntelService(token, config);
 const domainIntel = new DomainIntelService(token, config);
 
 it("file lookup should succeed", async () => {
-  const options = { provider: "reversinglabs", verbose: true, raw: true}
-  const response = await fileIntel.lookup("142b638c6a60b60c7f9928da4fb85a5a8e1422a9ffdc9ee49e17e56ccca9cf6e", "sha256", options);
+  const options = { provider: "reversinglabs", verbose: true, raw: true };
+  const response = await fileIntel.lookup(
+    "142b638c6a60b60c7f9928da4fb85a5a8e1422a9ffdc9ee49e17e56ccca9cf6e",
+    "sha256",
+    options
+  );
 
   expect(response.code).toBe(200);
   expect(response.result.data).toBeDefined();
@@ -33,7 +37,7 @@ it("IP lookup should succeed", async () => {
 });
 
 it("URL lookup should succeed", async () => {
-  const options = { provider: "crowdstrike", verbose: true, raw: true}
+  const options = { provider: "crowdstrike", verbose: true, raw: true };
   const response = await urlIntel.lookup("http://113.235.101.11:54384", options);
 
   expect(response.code).toBe(200);
@@ -42,7 +46,7 @@ it("URL lookup should succeed", async () => {
 });
 
 it("Domain lookup should succeed", async () => {
-  const options = { provider: "crowdstrike", verbose: true, raw: true}
+  const options = { provider: "crowdstrike", verbose: true, raw: true };
   const response = await domainIntel.lookup("teoghehofuuxo.su", options);
 
   expect(response.code).toBe(200);
