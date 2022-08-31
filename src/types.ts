@@ -159,3 +159,39 @@ export namespace Embargo {
     sanctions: Sanction[];
   }
 }
+
+/**
+ * Intel services interface definitions
+ */
+export namespace Intel {
+  export interface Options {
+    verbose?: boolean;
+    raw?: boolean;
+    provider?: string;
+  }
+
+  export interface FileParams extends Intel.Options {
+    hash: string;
+    hash_type: string;
+  }
+
+  export interface IPParams extends Intel.Options {
+    ip: string;
+  }
+
+  export interface URLParams extends Intel.Options {
+    url: string;
+  }
+
+  export interface DomainParams extends Intel.Options {
+    domain: string;
+  }
+
+  export interface Response {
+    data: {
+      category: string[];
+      score: number;
+      verdict: string;
+    };
+  }
+}

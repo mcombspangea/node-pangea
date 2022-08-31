@@ -17,7 +17,7 @@ class RedactService extends BaseService {
   /**
    * @summary Redact
    * @description Redact sensitive information from provided text.
-   * @param {string} param - The text data to redact.
+   * @param {string} text - The text data to redact.
    * @returns {Promise} - A promise representing an async call to the redact endpoint
    * @example
    * const response = await redact.redact("Jenny Jenny... 415-867-5309");
@@ -31,7 +31,7 @@ class RedactService extends BaseService {
   /**
    * @summary Redact structured
    * @description Redact sensitive information from structured data (e.g., JSON).
-   * @param {Object} param - Structured data to redact
+   * @param {Object} text - Structured data to redact
    * @returns {Promise} - A promise representing an async call to the redactStructured endpoint
    * @example
    * const data = { "phone": "415-867-5309" };
