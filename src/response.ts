@@ -27,10 +27,10 @@ class PangeaResponse<M> {
 
       this.status = this.gotResponse.statusMessage || "";
       this.code = this.gotResponse.statusCode || 0;
+    }
 
-      if (this.gotResponse.body instanceof Object) {
-        this.data = this.gotResponse.body as ResponseObject<any>;
-      }
+    if (this.gotResponse?.body instanceof Object) {
+      this.data = this.gotResponse.body as ResponseObject<any>;
     }
   }
 
