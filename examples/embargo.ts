@@ -1,10 +1,17 @@
 /* eslint-disable no-console */
 
-import PangeaConfig from "../src/config";
-import EmbargoService from "../src/services/embargo";
+/*
+ This example code is intended to be run directly
+ from the source code with `ts-node-esm`.
+
+ % ts-node-esm embargo.ts
+*/
+
+import PangeaConfig from "../src/config.js";
+import EmbargoService from "../src/services/embargo.js";
 
 const domain = process.env.PANGEA_DOMAIN;
-const token = process.env.PANGEA_TOKEN;
+const token = process.env.PANGEA_TOKEN || "";
 const configId = process.env.EMBARGO_CONFIG_ID;
 const config = new PangeaConfig({ domain, configId });
 const embargo = new EmbargoService(token, config);

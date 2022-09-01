@@ -1,12 +1,19 @@
 /* eslint-disable no-console */
 
-import PangeaConfig from "../src/config";
-import AuditService from "../src/services/audit";
-import PangeaResponse from "../src/response";
-import { Audit } from "../src/types";
+/*
+ This example code is intended to be run directly
+ from the source code with `ts-node-esm`.
+ 
+ % ts-node-esm audit.ts
+*/
+
+import PangeaConfig from "../src/config.js";
+import AuditService from "../src/services/audit.js";
+import PangeaResponse from "../src/response.js";
+import { Audit } from "../src/types.js";
 
 const domain = process.env.PANGEA_DOMAIN;
-const token = process.env.PANGEA_TOKEN;
+const token = process.env.PANGEA_TOKEN || "";
 const configId = process.env.AUDIT_CONFIG_ID;
 const config = new PangeaConfig({ domain, configId });
 const audit = new AuditService(token, config);
@@ -16,6 +23,7 @@ const audit = new AuditService(token, config);
     actor: "pangea",
     action: "update",
     status: "success",
+    source: "monitor",
     message: "node-sdk test message",
   };
 
@@ -25,7 +33,7 @@ const audit = new AuditService(token, config);
   if (logResponse.success) {
     console.log("Success:", logResponse.result);
   } else {
-    console.log("Error", logResponse.code, logResponse.result);
+    console.log("Error", logResponse.code, logResponse.status, logResponse.result);
   }
 
   console.log("Searching audit data...");
@@ -38,7 +46,7 @@ const audit = new AuditService(token, config);
   if (searchResponse.success) {
     console.log("Status", searchResponse.code);
 
-    searchResponse.result.events.forEach((row) => {
+    searchResponse.result.events.forEach((row: Audit.AuditRecord) => {
       console.log(
         row.event.received_at,
         row.event.message,
@@ -49,6 +57,6 @@ const audit = new AuditService(token, config);
       );
     });
   } else {
-    console.log("Error", searchResponse.code, searchResponse.result);
+    console.log("Error", searchResponse.code, searchResponse.status, searchResponse.result);
   }
 })();
