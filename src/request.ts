@@ -1,4 +1,4 @@
-import got, { Options, RequestError } from "got";
+import got, { HTTPError, Options, RequestError } from "got";
 import type { Response, Headers } from "got/dist/source";
 
 import PangeaConfig, { version } from "./config.js";
@@ -45,7 +45,6 @@ class PangeaRequest {
       }
       return apiCall;
     } catch (error) {
-      // throw new Error(error as string);
       return error as RequestError;
     }
   }
@@ -63,7 +62,6 @@ class PangeaRequest {
     try {
       return (await got.get(options)) as Response;
     } catch (error) {
-      // throw new Error(error as string);
       return error as RequestError;
     }
   }
@@ -94,8 +92,7 @@ class PangeaRequest {
   }
 
   getUrl(path: string): string {
-    const versionPath = this.config.apiVersion ? `/${this.config.apiVersion}` : "";
-    const url = `https://${this.serviceName}.${this.config.domain}${versionPath}/${path}`;
+    const url = `https://${this.serviceName}.${this.config.domain}/${path}`;
 
     return url;
   }

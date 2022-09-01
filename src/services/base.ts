@@ -2,10 +2,11 @@ import PangeaConfig from "../config.js";
 import PangeaRequest from "../request.js";
 import PangeaResponse from "../response.js";
 
-class BaseService {
-  configIdHeaderName: string;
-  serviceName: string;
+class BaseService {  
+  serviceName: string;  
   token: string;
+  configIdHeaderName: string;
+  apiVersion: string;
   config: PangeaConfig;
   request: PangeaRequest;
 
@@ -16,15 +17,16 @@ class BaseService {
 
   Optional:
     - config: a PangeaConfig object, uses defaults if non passed
-    - responseClass: a custom Response handler class, defaults to PangeaResponse
   */
   constructor(serviceName: string, token: string, config: PangeaConfig) {
     if (!serviceName) throw new Error("A serviceName is required");
+    if (!token) throw new Error("A token is required");
 
     this.configIdHeaderName = "";
 
     this.serviceName = serviceName;
-    this.token = token || "";
+    this.apiVersion = "v1";
+    this.token = token;
 
     this.config = config || new PangeaConfig();
     this.request = new PangeaRequest(this.serviceName, this.token, this.config);
@@ -43,13 +45,15 @@ class BaseService {
   }
 
   async get(endpoint: string, path: string): Promise<PangeaResponse<any>> {
-    const gotResponse = await this.request.get(endpoint, path);
+    const fullpath = `${this.apiVersion}/${path}`;
+    const gotResponse = await this.request.get(endpoint, fullpath);
 
     return new PangeaResponse(gotResponse);
   }
 
   async post(endpoint: string, data: object): Promise<PangeaResponse<any>> {
-    const gotResponse = await this.request.post(endpoint, data);
+    const fullpath = `${this.apiVersion}/${endpoint}`;
+    const gotResponse = await this.request.post(fullpath, data);
 
     return new PangeaResponse(gotResponse);
   }

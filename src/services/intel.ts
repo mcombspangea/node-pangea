@@ -32,6 +32,9 @@ import { Intel } from "../types.js";
 export class FileIntelService extends BaseService {
   constructor(token: string, config: PangeaConfig) {
     super("file-intel", token, config);
+    this.configIdHeaderName = "X-Pangea-File-Intel-Config-ID";
+    this.apiVersion = "v1";
+    this.init();
   }
 
   /**
@@ -97,6 +100,9 @@ export class FileIntelService extends BaseService {
 export class IPIntelService extends BaseService {
   constructor(token: string, config: PangeaConfig) {
     super("ip-intel", token, config);
+    this.configIdHeaderName = "X-Pangea-Ip-Intel-Config-ID";
+    this.apiVersion = "v1";
+    this.init();
   }
 
   /**
@@ -155,6 +161,9 @@ export class IPIntelService extends BaseService {
 export class URLIntelService extends BaseService {
   constructor(token: string, config: PangeaConfig) {
     super("url-intel", token, config);
+    this.configIdHeaderName = "X-Pangea-Url-Intel-Config-ID";
+    this.apiVersion = "v1";
+    this.init();
   }
 
   /**
@@ -214,6 +223,9 @@ export class URLIntelService extends BaseService {
 export class DomainIntelService extends BaseService {
   constructor(token: string, config: PangeaConfig) {
     super("domain-intel", token, config);
+    this.configIdHeaderName = "X-Pangea-Domain-Intel-Config-ID";
+    this.apiVersion = "v1";
+    this.init();
   }
 
   /**

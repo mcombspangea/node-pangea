@@ -9,7 +9,6 @@ export interface ConfigOptions {
   requestTimeout?: number;
   queuedRetryEnabled?: boolean;
   aqueuedRetries?: number;
-  apiVersion?: string;
 }
 
 /**
