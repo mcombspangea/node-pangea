@@ -2,8 +2,8 @@ import PangeaConfig from "../config.js";
 import PangeaRequest from "../request.js";
 import PangeaResponse from "../response.js";
 
-class BaseService {  
-  serviceName: string;  
+class BaseService {
+  serviceName: string;
   token: string;
   configIdHeaderName: string;
   apiVersion: string;

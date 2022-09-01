@@ -15,32 +15,30 @@ class PangeaResponse<M> {
     this.code = 0;
     this.success = false;
 
-    if (response instanceof RequestError) {      
-      this.gotResponse = response.response ? response.response as Response : undefined;
+    if (response instanceof RequestError) {
+      this.gotResponse = response.response ? (response.response as Response) : undefined;
       this.success = false;
 
       if (this.gotResponse) {
         this.status = this.gotResponse.statusMessage || "";
-        this.code = this.gotResponse.statusCode;        
+        this.code = this.gotResponse.statusCode;
         if (this.gotResponse.body instanceof Object) {
           this.data = this.gotResponse.body as ResponseObject<any>;
         }
       } else {
         this.code = response.code;
         this.status = response.message;
-        }
+      }
     } else if (response) {
       const { statusCode } = response;
-      this.gotResponse = response as Response;      
-      this.success = (statusCode >= 200 && statusCode <= 299) || statusCode === 304;    
-      this.code = statusCode;      
+      this.gotResponse = response as Response;
+      this.success = (statusCode >= 200 && statusCode <= 299) || statusCode === 304;
+      this.code = statusCode;
 
       if (this.gotResponse.body instanceof Object) {
         this.data = this.gotResponse.body as ResponseObject<any>;
       }
-    }    
-
-    
+    }
   }
 
   get result(): any {
