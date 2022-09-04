@@ -23,6 +23,7 @@ class AuditService extends BaseService {
     this.configIdHeaderName = "X-Pangea-Audit-Config-ID";
     this.verifyResponse = false;
     this.publishedRoots = {};
+    this.apiVersion = "v1";
     this.init();
   }
 
@@ -40,7 +41,7 @@ class AuditService extends BaseService {
    *   - new (string|object): The value of a record after it was changed.
    *   - old (string|object): The value of a record before it was changed.
    * @param {Object} options - Log options. The following log options are supported:
-   *   - verbose (bool): Return a verbose response, including the canonical event hash and created_at time.
+   *   - verbose (bool): Return a verbose response, including the canonical event hash and received_at time.
    * @returns {Promise} - A promise representing an async call to the log endpoint.
    * @example
    * const auditData = {
@@ -230,7 +231,6 @@ class AuditService extends BaseService {
     };
 
     if (!root) {
-      // response.result.root = {};
       return response;
     }
 
@@ -263,9 +263,9 @@ class AuditService extends BaseService {
             publishedRoots: this.publishedRoots,
             record: record,
           });
-          record.event.consistency_proof = consistency ? "pass" : "fail";
+          record.envelope.consistency_verification = consistency ? "pass" : "fail";
         } else {
-          record.event.consistency_proof = "none";
+          record.envelope.consistency_verification = "none";
         }
 
         if (record.membership_proof) {
@@ -273,9 +273,9 @@ class AuditService extends BaseService {
             root: response.result.root,
             record: record,
           });
-          record.event.membership_proof = membership ? "pass" : "fail";
+          record.envelope.membership_verification = membership ? "pass" : "fail";
         } else {
-          record.event.membership_proof = "none";
+          record.envelope.membership_verification = "none";
         }
       });
     }

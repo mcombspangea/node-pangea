@@ -44,18 +44,23 @@ export namespace Audit {
     old?: string;
     status?: string;
     target?: string;
-    received_at?: string;
     source?: string;
-    consistency_proof?: string;
-    membership_proof?: string;
+  }
+
+  export interface EventEnvelope {
+    event: Event;
+    signature?: string;
+    public_key?: string;
+    received_at?: string;
+    consistency_verification?: string;
+    membership_verification?: string;
   }
 
   export interface AuditRecord {
-    id?: number;
-    leaf_index?: string;
-    membership_proof?: string;
-    hash?: string;
-    event: Event;
+    envelope: Audit.EventEnvelope;
+    leaf_index: string;
+    membership_proof: string;
+    hash: string;
   }
 
   export interface Root {

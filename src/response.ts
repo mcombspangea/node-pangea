@@ -1,5 +1,5 @@
 import type { Response } from "got/dist/source/index";
-import { HTTPError, RequestError } from "got";
+import { RequestError } from "got";
 
 import type { ResponseObject } from "./types.js";
 
