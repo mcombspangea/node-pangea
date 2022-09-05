@@ -12,10 +12,10 @@ const TOKEN = process.env.PANGEA_TOKEN;
 const EMBARGOCONFIG_ID = process.env.EMBARGO_CONFIG_ID;
 const AUDITCONFIG_ID = process.env.AUDIT_CONFIG_ID;
 const REDACTCONFIG_ID = process.env.REDACT_CONFIG_ID;
-const PANGEACSP = process.env.PANGEA_CSP;
+const PANGEA_DOMAIN = process.env.PANGEA_DOMAIN;
 
 const embargoConfig = new PangeaConfig({
-  domain: `${PANGEACSP}.pangea.cloud`,
+  domain: PANGEA_DOMAIN,
   configId: EMBARGOCONFIG_ID,
 });
 const embargo = new EmbargoService(TOKEN, embargoConfig);

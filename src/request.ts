@@ -1,4 +1,4 @@
-import got, { HTTPError, Options, RequestError } from "got";
+import got, { Options, RequestError } from "got";
 import type { Response, Headers } from "got/dist/source";
 
 import PangeaConfig, { version } from "./config.js";

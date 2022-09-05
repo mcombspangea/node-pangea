@@ -48,12 +48,12 @@ const audit = new AuditService(token, config);
 
     searchResponse.result.events.forEach((row: Audit.AuditRecord) => {
       console.log(
-        row.event.received_at,
-        row.event.message,
-        row.event.source,
-        row.event.actor,
-        row.event.membership_proof,
-        row.event.consistency_proof
+        row.envelope.received_at,
+        row.envelope.event.message,
+        row.envelope.event.source,
+        row.envelope.event.actor,
+        row.envelope.membership_verification,
+        row.envelope.consistency_verification
       );
     });
   } else {
