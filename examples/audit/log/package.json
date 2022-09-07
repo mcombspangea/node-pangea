@@ -9,6 +9,6 @@
   "author": "Pangea",
   "license": "ISC",
   "dependencies": {
-    "node-pangea": "^0.2.9"
+    "node-pangea": "^0.3.3"
   }
 }
