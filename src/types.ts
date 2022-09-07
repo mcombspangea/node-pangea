@@ -18,7 +18,6 @@ export interface ConfigOptions {
 export interface ResponseObject<M> {
   request_id: string;
   request_time: string;
-  status_code: number;
   status: string;
   result: M;
   summary: string;

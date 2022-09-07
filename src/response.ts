@@ -24,6 +24,7 @@ class PangeaResponse<M> {
         this.code = this.gotResponse.statusCode;
         if (this.gotResponse.body instanceof Object) {
           this.data = this.gotResponse.body as ResponseObject<any>;
+          this.status = this.data.status;
         }
       } else {
         this.code = response.code;
@@ -36,9 +37,11 @@ class PangeaResponse<M> {
 
       if (this.gotResponse.body instanceof Object) {
         this.data = this.gotResponse.body as ResponseObject<any>;
+        this.status = this.data.status;
         this.success = this.data.status === "Success";
       } else {
         this.success = false;
+        this.status = "InvalidPayloadReceived";
       }
     }
   }
