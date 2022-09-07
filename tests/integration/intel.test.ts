@@ -22,7 +22,7 @@ it("file lookup should succeed", async () => {
     options
   );
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
   expect(response.result.data).toBeDefined();
   expect(response.result.data.verdict).toBe("malicious");
 });
@@ -31,7 +31,7 @@ it("IP lookup should succeed", async () => {
   const options = { provider: "crowdstrike", verbose: true, raw: true };
   const response = await ipIntel.lookup("93.231.182.110", options);
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
   expect(response.result.data).toBeDefined();
   expect(response.result.data.verdict).toBe("malicious");
 });
@@ -40,7 +40,7 @@ it("URL lookup should succeed", async () => {
   const options = { provider: "crowdstrike", verbose: true, raw: true };
   const response = await urlIntel.lookup("http://113.235.101.11:54384", options);
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
   expect(response.result.data).toBeDefined();
   expect(response.result.data.verdict).toBe("malicious");
 });
@@ -49,7 +49,7 @@ it("Domain lookup should succeed", async () => {
   const options = { provider: "crowdstrike", verbose: true, raw: true };
   const response = await domainIntel.lookup("teoghehofuuxo.su", options);
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
   expect(response.result.data).toBeDefined();
   expect(response.result.data.verdict).toBe("malicious");
 });

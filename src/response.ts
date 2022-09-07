@@ -32,11 +32,13 @@ class PangeaResponse<M> {
     } else if (response) {
       const { statusCode } = response;
       this.gotResponse = response as Response;
-      this.success = (statusCode >= 200 && statusCode <= 299) || statusCode === 304;
       this.code = statusCode;
 
       if (this.gotResponse.body instanceof Object) {
         this.data = this.gotResponse.body as ResponseObject<any>;
+        this.success = this.data.status === "Success";
+      } else {
+        this.success = false;
       }
     }
   }

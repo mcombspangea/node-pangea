@@ -16,7 +16,7 @@ it("log an audit event", async () => {
 
   const response = await audit.log(event);
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
   expect(typeof response.result.hash).toBe("string");
 });
 
@@ -27,13 +27,13 @@ it("search audit log", async () => {
   };
 
   const response = await audit.search(query, options);
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
 });
 
 it("get audit root", async () => {
   const response = await audit.root();
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
   expect(response.result.data).toEqual(
     expect.objectContaining({
       consistency_proof: expect.any(Object),
@@ -52,5 +52,5 @@ it("search audit log with verify flag", async () => {
 
   const response = await audit.search(query, options);
 
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
 });

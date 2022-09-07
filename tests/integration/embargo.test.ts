@@ -16,7 +16,7 @@ it("check IP in Russia", async () => {
     annotations: expect.any(Object),
   };
   const response = await embargo.ipCheck("213.24.238.26");
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
 
   const sanction = response.result.sanctions[0];
   expect(sanction).toBeDefined();
@@ -32,7 +32,7 @@ it("check ISO for Cuba", async () => {
     annotations: expect.any(Object),
   };
   const response = await embargo.isoCheck("CU");
-  expect(response.code).toBe(200);
+  expect(response.status).toBe("Success");
 
   const sanction = response.result.sanctions[0];
   expect(sanction).toBeDefined();
